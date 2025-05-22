@@ -1,6 +1,6 @@
 ﻿namespace MarcadorDeAsistencia
 {
-    partial class Form1
+    partial class MarcadorDeAsistencia
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -28,18 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblHora = new System.Windows.Forms.Label();
+            this.lblFecha = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnEntrada = new System.Windows.Forms.Button();
-            this.btnSalida = new System.Windows.Forms.Button();
-            this.btnInicioDescanso = new System.Windows.Forms.Button();
             this.btnFinDescanso = new System.Windows.Forms.Button();
+            this.btnInicioDescanso = new System.Windows.Forms.Button();
+            this.btnSalida = new System.Windows.Forms.Button();
+            this.btnEntrada = new System.Windows.Forms.Button();
             this.btnActivarCamara = new System.Windows.Forms.Button();
             this.btnDesactivarCamara = new System.Windows.Forms.Button();
             this.btnRegistrarAsistencia = new System.Windows.Forms.Button();
+            this.timerHora = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -55,8 +57,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.lblHora);
+            this.groupBox1.Controls.Add(this.lblFecha);
             this.groupBox1.Location = new System.Drawing.Point(415, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(373, 74);
@@ -64,23 +66,23 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Sistema: ";
             // 
-            // label1
+            // lblHora
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.lblHora.AutoSize = true;
+            this.lblHora.Location = new System.Drawing.Point(21, 50);
+            this.lblHora.Name = "lblHora";
+            this.lblHora.Size = new System.Drawing.Size(28, 13);
+            this.lblHora.TabIndex = 1;
+            this.lblHora.Text = "hora";
             // 
-            // label2
+            // lblFecha
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 50);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "label2";
+            this.lblFecha.AutoSize = true;
+            this.lblFecha.Location = new System.Drawing.Point(21, 25);
+            this.lblFecha.Name = "lblFecha";
+            this.lblFecha.Size = new System.Drawing.Size(34, 13);
+            this.lblFecha.TabIndex = 0;
+            this.lblFecha.Text = "fecha";
             // 
             // groupBox2
             // 
@@ -95,23 +97,14 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Tipo de Asistencia: ";
             // 
-            // btnEntrada
+            // btnFinDescanso
             // 
-            this.btnEntrada.Location = new System.Drawing.Point(6, 19);
-            this.btnEntrada.Name = "btnEntrada";
-            this.btnEntrada.Size = new System.Drawing.Size(165, 23);
-            this.btnEntrada.TabIndex = 0;
-            this.btnEntrada.Text = "Entrada";
-            this.btnEntrada.UseVisualStyleBackColor = true;
-            // 
-            // btnSalida
-            // 
-            this.btnSalida.Location = new System.Drawing.Point(202, 19);
-            this.btnSalida.Name = "btnSalida";
-            this.btnSalida.Size = new System.Drawing.Size(165, 23);
-            this.btnSalida.TabIndex = 1;
-            this.btnSalida.Text = "Salida";
-            this.btnSalida.UseVisualStyleBackColor = true;
+            this.btnFinDescanso.Location = new System.Drawing.Point(202, 48);
+            this.btnFinDescanso.Name = "btnFinDescanso";
+            this.btnFinDescanso.Size = new System.Drawing.Size(165, 23);
+            this.btnFinDescanso.TabIndex = 3;
+            this.btnFinDescanso.Text = "Fin de Descanso";
+            this.btnFinDescanso.UseVisualStyleBackColor = true;
             // 
             // btnInicioDescanso
             // 
@@ -122,14 +115,23 @@
             this.btnInicioDescanso.Text = "Inicio de Descanso";
             this.btnInicioDescanso.UseVisualStyleBackColor = true;
             // 
-            // btnFinDescanso
+            // btnSalida
             // 
-            this.btnFinDescanso.Location = new System.Drawing.Point(202, 48);
-            this.btnFinDescanso.Name = "btnFinDescanso";
-            this.btnFinDescanso.Size = new System.Drawing.Size(165, 23);
-            this.btnFinDescanso.TabIndex = 3;
-            this.btnFinDescanso.Text = "Fin de Descanso";
-            this.btnFinDescanso.UseVisualStyleBackColor = true;
+            this.btnSalida.Location = new System.Drawing.Point(202, 19);
+            this.btnSalida.Name = "btnSalida";
+            this.btnSalida.Size = new System.Drawing.Size(165, 23);
+            this.btnSalida.TabIndex = 1;
+            this.btnSalida.Text = "Salida";
+            this.btnSalida.UseVisualStyleBackColor = true;
+            // 
+            // btnEntrada
+            // 
+            this.btnEntrada.Location = new System.Drawing.Point(6, 19);
+            this.btnEntrada.Name = "btnEntrada";
+            this.btnEntrada.Size = new System.Drawing.Size(165, 23);
+            this.btnEntrada.TabIndex = 0;
+            this.btnEntrada.Text = "Entrada";
+            this.btnEntrada.UseVisualStyleBackColor = true;
             // 
             // btnActivarCamara
             // 
@@ -184,8 +186,8 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblHora;
+        private System.Windows.Forms.Label lblFecha;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnFinDescanso;
         private System.Windows.Forms.Button btnInicioDescanso;
@@ -194,6 +196,7 @@
         private System.Windows.Forms.Button btnActivarCamara;
         private System.Windows.Forms.Button btnDesactivarCamara;
         private System.Windows.Forms.Button btnRegistrarAsistencia;
+        private System.Windows.Forms.Timer timerHora;
     }
 }
 
