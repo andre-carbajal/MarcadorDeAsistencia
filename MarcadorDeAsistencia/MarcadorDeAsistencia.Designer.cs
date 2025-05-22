@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pbCamera = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblHora = new System.Windows.Forms.Label();
             this.lblFecha = new System.Windows.Forms.Label();
@@ -42,18 +42,19 @@
             this.btnDesactivarCamara = new System.Windows.Forms.Button();
             this.btnRegistrarAsistencia = new System.Windows.Forms.Button();
             this.timerHora = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCamera)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // pbCamera
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(397, 397);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.pbCamera.Location = new System.Drawing.Point(12, 12);
+            this.pbCamera.Name = "pbCamera";
+            this.pbCamera.Size = new System.Drawing.Size(397, 397);
+            this.pbCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbCamera.TabIndex = 0;
+            this.pbCamera.TabStop = false;
             // 
             // groupBox1
             // 
@@ -141,6 +142,7 @@
             this.btnActivarCamara.TabIndex = 4;
             this.btnActivarCamara.Text = "Activar Cámara";
             this.btnActivarCamara.UseVisualStyleBackColor = true;
+            this.btnActivarCamara.Click += new System.EventHandler(this.btnActivarCamara_Click);
             // 
             // btnDesactivarCamara
             // 
@@ -150,6 +152,7 @@
             this.btnDesactivarCamara.TabIndex = 5;
             this.btnDesactivarCamara.Text = "Desactivar Cámara";
             this.btnDesactivarCamara.UseVisualStyleBackColor = true;
+            this.btnDesactivarCamara.Click += new System.EventHandler(this.btnDesactivarCamara_Click);
             // 
             // btnRegistrarAsistencia
             // 
@@ -160,7 +163,7 @@
             this.btnRegistrarAsistencia.Text = "Registrar Asistencia";
             this.btnRegistrarAsistencia.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // MarcadorDeAsistencia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -170,11 +173,12 @@
             this.Controls.Add(this.btnActivarCamara);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.pictureBox1);
-            this.Name = "Form1";
+            this.Controls.Add(this.pbCamera);
+            this.Name = "MarcadorDeAsistencia";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Control de Asistencia";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MarcadorDeAsistencia_FormClosed);
+            ((System.ComponentModel.ISupportInitialize)(this.pbCamera)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -184,7 +188,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbCamera;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblHora;
         private System.Windows.Forms.Label lblFecha;
