@@ -1,6 +1,7 @@
 ﻿using Emgu.CV;
 using MarcadorDeAsistencia.Clases;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace MarcadorDeAsistencia
@@ -20,6 +21,8 @@ namespace MarcadorDeAsistencia
             timerHora.Start();
 
             lblHora.Text = FechaUtils.FormatearHora(DateTime.Now);
+
+            gbTipoAsistencia.Enabled = false;
         }
 
         private void TimerHora_Tick(object sender, EventArgs e)
@@ -27,7 +30,7 @@ namespace MarcadorDeAsistencia
             lblHora.Text = FechaUtils.FormatearHora(DateTime.Now);
         }
 
-        private void btnActivarCamara_Click(object sender, EventArgs e)
+        private void RunCamara()
         {
             try
             {
@@ -49,11 +52,6 @@ namespace MarcadorDeAsistencia
             {
                 MessageBox.Show($"Error iniciando la cámara: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void btnDesactivarCamara_Click(object sender, EventArgs e)
-        {
-            StopCamera();
         }
 
         private void MarcadorDeAsistencia_FormClosed(object sender, FormClosedEventArgs e)
@@ -88,6 +86,38 @@ namespace MarcadorDeAsistencia
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error processing frame: {ex.Message}");
+                }
+            }
+        }
+
+        private void btnValidar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtCodigo.Text))
+            {
+                MessageBox.Show("Por favor, ingrese un código.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                if (txtCodigo.Text.Length == 8 && txtCodigo.Text.All(char.IsDigit))
+                {
+                    lblValidacion.Text = "Validando código en la base de datos...";
+                    // TODO: Aquí se debe realizar la validación del código ingresado en la base de datos. (API)
+                    // if ( ' Validacion ' == txtCodigo.Text )
+                    //     lblValidacion.Text = "Código válido. Por favor, espere...";
+                    //     sleep(3000);
+                    //     lblValidacion.Text = "Iniciando Cámara...";
+                    //     RunCamara();
+                    // TODO : Hacer la consulta a la API de la foto
+                    //     if (VALIDACION DE CAMARA)
+                    // else
+                    //     lblValidacion.Text = "Código inválido. Por favor, intente nuevamente.";
+                    //     txtCodigo.Clear();
+                }
+                else
+                {
+                    MessageBox.Show("El código debe tener exactamente 8 numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtCodigo.Clear();
                 }
             }
         }

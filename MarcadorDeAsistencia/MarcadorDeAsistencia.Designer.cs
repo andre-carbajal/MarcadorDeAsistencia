@@ -30,177 +30,187 @@
         {
             this.components = new System.ComponentModel.Container();
             this.pbCamera = new System.Windows.Forms.PictureBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblHora = new System.Windows.Forms.Label();
             this.lblFecha = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gbTipoAsistencia = new System.Windows.Forms.GroupBox();
             this.btnFinDescanso = new System.Windows.Forms.Button();
             this.btnInicioDescanso = new System.Windows.Forms.Button();
             this.btnSalida = new System.Windows.Forms.Button();
             this.btnEntrada = new System.Windows.Forms.Button();
-            this.btnActivarCamara = new System.Windows.Forms.Button();
-            this.btnDesactivarCamara = new System.Windows.Forms.Button();
-            this.btnRegistrarAsistencia = new System.Windows.Forms.Button();
             this.timerHora = new System.Windows.Forms.Timer(this.components);
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnValidar = new System.Windows.Forms.Button();
+            this.txtCodigo = new System.Windows.Forms.TextBox();
+            this.lblValidacion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbCamera)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gbTipoAsistencia.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbCamera
             // 
-            this.pbCamera.Location = new System.Drawing.Point(12, 12);
+            this.pbCamera.Location = new System.Drawing.Point(16, 15);
+            this.pbCamera.Margin = new System.Windows.Forms.Padding(4);
             this.pbCamera.Name = "pbCamera";
-            this.pbCamera.Size = new System.Drawing.Size(397, 397);
+            this.pbCamera.Size = new System.Drawing.Size(529, 489);
             this.pbCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbCamera.TabIndex = 0;
             this.pbCamera.TabStop = false;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.lblHora);
-            this.groupBox1.Controls.Add(this.lblFecha);
-            this.groupBox1.Location = new System.Drawing.Point(415, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(373, 74);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Sistema: ";
-            // 
             // lblHora
             // 
             this.lblHora.AutoSize = true;
-            this.lblHora.Location = new System.Drawing.Point(21, 50);
+            this.lblHora.Location = new System.Drawing.Point(866, 29);
+            this.lblHora.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHora.Name = "lblHora";
-            this.lblHora.Size = new System.Drawing.Size(28, 13);
+            this.lblHora.Size = new System.Drawing.Size(34, 16);
             this.lblHora.TabIndex = 1;
             this.lblHora.Text = "hora";
             // 
             // lblFecha
             // 
             this.lblFecha.AutoSize = true;
-            this.lblFecha.Location = new System.Drawing.Point(21, 25);
+            this.lblFecha.Location = new System.Drawing.Point(574, 29);
+            this.lblFecha.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFecha.Name = "lblFecha";
-            this.lblFecha.Size = new System.Drawing.Size(34, 13);
+            this.lblFecha.Size = new System.Drawing.Size(40, 16);
             this.lblFecha.TabIndex = 0;
             this.lblFecha.Text = "fecha";
             // 
-            // groupBox2
+            // gbTipoAsistencia
             // 
-            this.groupBox2.Controls.Add(this.btnFinDescanso);
-            this.groupBox2.Controls.Add(this.btnInicioDescanso);
-            this.groupBox2.Controls.Add(this.btnSalida);
-            this.groupBox2.Controls.Add(this.btnEntrada);
-            this.groupBox2.Location = new System.Drawing.Point(415, 107);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(373, 77);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Tipo de Asistencia: ";
+            this.gbTipoAsistencia.Controls.Add(this.btnFinDescanso);
+            this.gbTipoAsistencia.Controls.Add(this.btnInicioDescanso);
+            this.gbTipoAsistencia.Controls.Add(this.btnSalida);
+            this.gbTipoAsistencia.Controls.Add(this.btnEntrada);
+            this.gbTipoAsistencia.Location = new System.Drawing.Point(562, 169);
+            this.gbTipoAsistencia.Margin = new System.Windows.Forms.Padding(4);
+            this.gbTipoAsistencia.Name = "gbTipoAsistencia";
+            this.gbTipoAsistencia.Padding = new System.Windows.Forms.Padding(4);
+            this.gbTipoAsistencia.Size = new System.Drawing.Size(387, 106);
+            this.gbTipoAsistencia.TabIndex = 2;
+            this.gbTipoAsistencia.TabStop = false;
+            this.gbTipoAsistencia.Text = "Tipo de Asistencia: ";
             // 
             // btnFinDescanso
             // 
-            this.btnFinDescanso.Location = new System.Drawing.Point(202, 48);
+            this.btnFinDescanso.Location = new System.Drawing.Point(215, 64);
+            this.btnFinDescanso.Margin = new System.Windows.Forms.Padding(4);
             this.btnFinDescanso.Name = "btnFinDescanso";
-            this.btnFinDescanso.Size = new System.Drawing.Size(165, 23);
+            this.btnFinDescanso.Size = new System.Drawing.Size(138, 28);
             this.btnFinDescanso.TabIndex = 3;
             this.btnFinDescanso.Text = "Fin de Descanso";
             this.btnFinDescanso.UseVisualStyleBackColor = true;
             // 
             // btnInicioDescanso
             // 
-            this.btnInicioDescanso.Location = new System.Drawing.Point(6, 48);
+            this.btnInicioDescanso.Location = new System.Drawing.Point(47, 65);
+            this.btnInicioDescanso.Margin = new System.Windows.Forms.Padding(4);
             this.btnInicioDescanso.Name = "btnInicioDescanso";
-            this.btnInicioDescanso.Size = new System.Drawing.Size(165, 23);
+            this.btnInicioDescanso.Size = new System.Drawing.Size(139, 28);
             this.btnInicioDescanso.TabIndex = 2;
             this.btnInicioDescanso.Text = "Inicio de Descanso";
             this.btnInicioDescanso.UseVisualStyleBackColor = true;
             // 
             // btnSalida
             // 
-            this.btnSalida.Location = new System.Drawing.Point(202, 19);
+            this.btnSalida.Location = new System.Drawing.Point(215, 23);
+            this.btnSalida.Margin = new System.Windows.Forms.Padding(4);
             this.btnSalida.Name = "btnSalida";
-            this.btnSalida.Size = new System.Drawing.Size(165, 23);
+            this.btnSalida.Size = new System.Drawing.Size(138, 28);
             this.btnSalida.TabIndex = 1;
             this.btnSalida.Text = "Salida";
             this.btnSalida.UseVisualStyleBackColor = true;
             // 
             // btnEntrada
             // 
-            this.btnEntrada.Location = new System.Drawing.Point(6, 19);
+            this.btnEntrada.Location = new System.Drawing.Point(47, 23);
+            this.btnEntrada.Margin = new System.Windows.Forms.Padding(4);
             this.btnEntrada.Name = "btnEntrada";
-            this.btnEntrada.Size = new System.Drawing.Size(165, 23);
+            this.btnEntrada.Size = new System.Drawing.Size(139, 28);
             this.btnEntrada.TabIndex = 0;
             this.btnEntrada.Text = "Entrada";
             this.btnEntrada.UseVisualStyleBackColor = true;
             // 
-            // btnActivarCamara
+            // groupBox3
             // 
-            this.btnActivarCamara.Location = new System.Drawing.Point(12, 415);
-            this.btnActivarCamara.Name = "btnActivarCamara";
-            this.btnActivarCamara.Size = new System.Drawing.Size(160, 23);
-            this.btnActivarCamara.TabIndex = 4;
-            this.btnActivarCamara.Text = "Activar Cámara";
-            this.btnActivarCamara.UseVisualStyleBackColor = true;
-            this.btnActivarCamara.Click += new System.EventHandler(this.btnActivarCamara_Click);
+            this.groupBox3.Controls.Add(this.lblValidacion);
+            this.groupBox3.Controls.Add(this.btnValidar);
+            this.groupBox3.Controls.Add(this.txtCodigo);
+            this.groupBox3.Location = new System.Drawing.Point(560, 59);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(387, 89);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Código";
             // 
-            // btnDesactivarCamara
+            // btnValidar
             // 
-            this.btnDesactivarCamara.Location = new System.Drawing.Point(249, 415);
-            this.btnDesactivarCamara.Name = "btnDesactivarCamara";
-            this.btnDesactivarCamara.Size = new System.Drawing.Size(160, 23);
-            this.btnDesactivarCamara.TabIndex = 5;
-            this.btnDesactivarCamara.Text = "Desactivar Cámara";
-            this.btnDesactivarCamara.UseVisualStyleBackColor = true;
-            this.btnDesactivarCamara.Click += new System.EventHandler(this.btnDesactivarCamara_Click);
+            this.btnValidar.Location = new System.Drawing.Point(278, 26);
+            this.btnValidar.Name = "btnValidar";
+            this.btnValidar.Size = new System.Drawing.Size(75, 23);
+            this.btnValidar.TabIndex = 1;
+            this.btnValidar.Text = "Validar";
+            this.btnValidar.UseVisualStyleBackColor = true;
+            this.btnValidar.Click += new System.EventHandler(this.btnValidar_Click);
             // 
-            // btnRegistrarAsistencia
+            // txtCodigo
             // 
-            this.btnRegistrarAsistencia.Location = new System.Drawing.Point(508, 190);
-            this.btnRegistrarAsistencia.Name = "btnRegistrarAsistencia";
-            this.btnRegistrarAsistencia.Size = new System.Drawing.Size(182, 23);
-            this.btnRegistrarAsistencia.TabIndex = 6;
-            this.btnRegistrarAsistencia.Text = "Registrar Asistencia";
-            this.btnRegistrarAsistencia.UseVisualStyleBackColor = true;
+            this.txtCodigo.Location = new System.Drawing.Point(47, 27);
+            this.txtCodigo.Name = "txtCodigo";
+            this.txtCodigo.Size = new System.Drawing.Size(181, 22);
+            this.txtCodigo.TabIndex = 0;
+            // 
+            // lblValidacion
+            // 
+            this.lblValidacion.AutoSize = true;
+            this.lblValidacion.BackColor = System.Drawing.SystemColors.Control;
+            this.lblValidacion.ForeColor = System.Drawing.Color.Red;
+            this.lblValidacion.Location = new System.Drawing.Point(46, 61);
+            this.lblValidacion.Name = "lblValidacion";
+            this.lblValidacion.Size = new System.Drawing.Size(41, 16);
+            this.lblValidacion.TabIndex = 4;
+            this.lblValidacion.Text = "Texto";
             // 
             // MarcadorDeAsistencia
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnRegistrarAsistencia);
-            this.Controls.Add(this.btnDesactivarCamara);
-            this.Controls.Add(this.btnActivarCamara);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(962, 525);
+            this.Controls.Add(this.lblHora);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.lblFecha);
+            this.Controls.Add(this.gbTipoAsistencia);
             this.Controls.Add(this.pbCamera);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MarcadorDeAsistencia";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Control de Asistencia";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MarcadorDeAsistencia_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.pbCamera)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
+            this.gbTipoAsistencia.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.PictureBox pbCamera;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblHora;
         private System.Windows.Forms.Label lblFecha;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gbTipoAsistencia;
         private System.Windows.Forms.Button btnFinDescanso;
         private System.Windows.Forms.Button btnInicioDescanso;
         private System.Windows.Forms.Button btnSalida;
         private System.Windows.Forms.Button btnEntrada;
-        private System.Windows.Forms.Button btnActivarCamara;
-        private System.Windows.Forms.Button btnDesactivarCamara;
-        private System.Windows.Forms.Button btnRegistrarAsistencia;
         private System.Windows.Forms.Timer timerHora;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnValidar;
+        private System.Windows.Forms.TextBox txtCodigo;
+        private System.Windows.Forms.Label lblValidacion;
     }
 }
 
