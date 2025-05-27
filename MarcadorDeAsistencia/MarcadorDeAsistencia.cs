@@ -2,6 +2,7 @@
 using MarcadorDeAsistencia.Clases;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MarcadorDeAsistencia
@@ -11,23 +12,27 @@ namespace MarcadorDeAsistencia
         private bool isCapturing = false;
         private VideoCapture capture;
 
+        private FaceDetectionService fds = new FaceDetectionService();
+
         public MarcadorDeAsistencia()
         {
             InitializeComponent();
-            lblFecha.Text = FechaUtils.FormatearFechaLarga(DateTime.Now);
+            lblFecha.Text = FechaUtil.FormatearFechaLarga(DateTime.Now);
 
             timerHora.Interval = 1000;
             timerHora.Tick += TimerHora_Tick;
             timerHora.Start();
 
-            lblHora.Text = FechaUtils.FormatearHora(DateTime.Now);
+            lblHora.Text = FechaUtil.FormatearHora(DateTime.Now);
+
+            lblValidacion.Text = string.Empty;
 
             gbTipoAsistencia.Enabled = false;
         }
 
         private void TimerHora_Tick(object sender, EventArgs e)
         {
-            lblHora.Text = FechaUtils.FormatearHora(DateTime.Now);
+            lblHora.Text = FechaUtil.FormatearHora(DateTime.Now);
         }
 
         private void RunCamara()
@@ -90,6 +95,12 @@ namespace MarcadorDeAsistencia
             }
         }
 
+        private void cleanTxtCodigo()
+        {
+            txtCodigo.Clear();
+            txtCodigo.Focus();
+        }
+
         private void btnValidar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtCodigo.Text))
@@ -101,18 +112,44 @@ namespace MarcadorDeAsistencia
             {
                 if (txtCodigo.Text.Length == 8 && txtCodigo.Text.All(char.IsDigit))
                 {
-                    lblValidacion.Text = "Validando código en la base de datos...";
-                    // TODO: Aquí se debe realizar la validación del código ingresado en la base de datos. (API)
-                    // if ( ' Validacion ' == txtCodigo.Text )
-                    //     lblValidacion.Text = "Código válido. Por favor, espere...";
-                    //     sleep(3000);
-                    //     lblValidacion.Text = "Iniciando Cámara...";
-                    //     RunCamara();
-                    // TODO : Hacer la consulta a la API de la foto
-                    //     if (VALIDACION DE CAMARA)
-                    // else
-                    //     lblValidacion.Text = "Código inválido. Por favor, intente nuevamente.";
-                    //     txtCodigo.Clear();
+                    lblValidacion.Text = "Validando código con reconocimiento facial...";
+                    RunCamara();
+                    using (Mat frame = new Mat()) 
+                    { 
+                        capture.Read(frame);
+
+                        if (!frame.IsEmpty)
+                        {
+                            var bitmap = frame.ToBitmap();
+                            fds.SetFrame(bitmap);
+                            fds.SetIdEmpleado(txtCodigo.Text);
+
+                            Task.Run( async () =>
+                            {
+                                var result = await fds.DetectPerson();
+                                
+                                if (result != null && result.result)
+                                {
+                                    Invoke(new Action(() =>
+                                    {
+                                        lblValidacion.Text = "Código válido. Por favor, espere...";
+                                        gbTipoAsistencia.Enabled = true;
+                                        cleanTxtCodigo();
+                                        StopCamera();
+                                    }));
+                                }
+                                else
+                                {
+                                    Invoke(new Action(() =>
+                                    {
+                                        lblValidacion.Text = "Código inválido. Por favor, intente nuevamente.";
+                                        cleanTxtCodigo();
+                                        StopCamera();
+                                    }));
+                                }
+                            });
+                        }
+                    }
                 }
                 else
                 {

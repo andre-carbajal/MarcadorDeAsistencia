@@ -39,9 +39,9 @@
             this.btnEntrada = new System.Windows.Forms.Button();
             this.timerHora = new System.Windows.Forms.Timer(this.components);
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lblValidacion = new System.Windows.Forms.Label();
             this.btnValidar = new System.Windows.Forms.Button();
             this.txtCodigo = new System.Windows.Forms.TextBox();
-            this.lblValidacion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbCamera)).BeginInit();
             this.gbTipoAsistencia.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -49,10 +49,9 @@
             // 
             // pbCamera
             // 
-            this.pbCamera.Location = new System.Drawing.Point(16, 15);
-            this.pbCamera.Margin = new System.Windows.Forms.Padding(4);
+            this.pbCamera.Location = new System.Drawing.Point(12, 12);
             this.pbCamera.Name = "pbCamera";
-            this.pbCamera.Size = new System.Drawing.Size(529, 489);
+            this.pbCamera.Size = new System.Drawing.Size(397, 397);
             this.pbCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbCamera.TabIndex = 0;
             this.pbCamera.TabStop = false;
@@ -60,20 +59,20 @@
             // lblHora
             // 
             this.lblHora.AutoSize = true;
-            this.lblHora.Location = new System.Drawing.Point(866, 29);
-            this.lblHora.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblHora.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHora.Location = new System.Drawing.Point(650, 24);
             this.lblHora.Name = "lblHora";
-            this.lblHora.Size = new System.Drawing.Size(34, 16);
+            this.lblHora.Size = new System.Drawing.Size(32, 13);
             this.lblHora.TabIndex = 1;
             this.lblHora.Text = "hora";
             // 
             // lblFecha
             // 
             this.lblFecha.AutoSize = true;
-            this.lblFecha.Location = new System.Drawing.Point(574, 29);
-            this.lblFecha.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFecha.Location = new System.Drawing.Point(430, 24);
             this.lblFecha.Name = "lblFecha";
-            this.lblFecha.Size = new System.Drawing.Size(40, 16);
+            this.lblFecha.Size = new System.Drawing.Size(39, 13);
             this.lblFecha.TabIndex = 0;
             this.lblFecha.Text = "fecha";
             // 
@@ -83,51 +82,45 @@
             this.gbTipoAsistencia.Controls.Add(this.btnInicioDescanso);
             this.gbTipoAsistencia.Controls.Add(this.btnSalida);
             this.gbTipoAsistencia.Controls.Add(this.btnEntrada);
-            this.gbTipoAsistencia.Location = new System.Drawing.Point(562, 169);
-            this.gbTipoAsistencia.Margin = new System.Windows.Forms.Padding(4);
+            this.gbTipoAsistencia.Location = new System.Drawing.Point(422, 137);
             this.gbTipoAsistencia.Name = "gbTipoAsistencia";
-            this.gbTipoAsistencia.Padding = new System.Windows.Forms.Padding(4);
-            this.gbTipoAsistencia.Size = new System.Drawing.Size(387, 106);
+            this.gbTipoAsistencia.Size = new System.Drawing.Size(290, 86);
             this.gbTipoAsistencia.TabIndex = 2;
             this.gbTipoAsistencia.TabStop = false;
             this.gbTipoAsistencia.Text = "Tipo de Asistencia: ";
             // 
             // btnFinDescanso
             // 
-            this.btnFinDescanso.Location = new System.Drawing.Point(215, 64);
-            this.btnFinDescanso.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFinDescanso.Location = new System.Drawing.Point(161, 52);
             this.btnFinDescanso.Name = "btnFinDescanso";
-            this.btnFinDescanso.Size = new System.Drawing.Size(138, 28);
+            this.btnFinDescanso.Size = new System.Drawing.Size(104, 23);
             this.btnFinDescanso.TabIndex = 3;
             this.btnFinDescanso.Text = "Fin de Descanso";
             this.btnFinDescanso.UseVisualStyleBackColor = true;
             // 
             // btnInicioDescanso
             // 
-            this.btnInicioDescanso.Location = new System.Drawing.Point(47, 65);
-            this.btnInicioDescanso.Margin = new System.Windows.Forms.Padding(4);
+            this.btnInicioDescanso.Location = new System.Drawing.Point(35, 53);
             this.btnInicioDescanso.Name = "btnInicioDescanso";
-            this.btnInicioDescanso.Size = new System.Drawing.Size(139, 28);
+            this.btnInicioDescanso.Size = new System.Drawing.Size(104, 23);
             this.btnInicioDescanso.TabIndex = 2;
             this.btnInicioDescanso.Text = "Inicio de Descanso";
             this.btnInicioDescanso.UseVisualStyleBackColor = true;
             // 
             // btnSalida
             // 
-            this.btnSalida.Location = new System.Drawing.Point(215, 23);
-            this.btnSalida.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSalida.Location = new System.Drawing.Point(161, 19);
             this.btnSalida.Name = "btnSalida";
-            this.btnSalida.Size = new System.Drawing.Size(138, 28);
+            this.btnSalida.Size = new System.Drawing.Size(104, 23);
             this.btnSalida.TabIndex = 1;
             this.btnSalida.Text = "Salida";
             this.btnSalida.UseVisualStyleBackColor = true;
             // 
             // btnEntrada
             // 
-            this.btnEntrada.Location = new System.Drawing.Point(47, 23);
-            this.btnEntrada.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEntrada.Location = new System.Drawing.Point(35, 19);
             this.btnEntrada.Name = "btnEntrada";
-            this.btnEntrada.Size = new System.Drawing.Size(139, 28);
+            this.btnEntrada.Size = new System.Drawing.Size(104, 23);
             this.btnEntrada.TabIndex = 0;
             this.btnEntrada.Text = "Entrada";
             this.btnEntrada.UseVisualStyleBackColor = true;
@@ -137,18 +130,33 @@
             this.groupBox3.Controls.Add(this.lblValidacion);
             this.groupBox3.Controls.Add(this.btnValidar);
             this.groupBox3.Controls.Add(this.txtCodigo);
-            this.groupBox3.Location = new System.Drawing.Point(560, 59);
+            this.groupBox3.Location = new System.Drawing.Point(420, 48);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(387, 89);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Size = new System.Drawing.Size(290, 72);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Código";
             // 
+            // lblValidacion
+            // 
+            this.lblValidacion.AutoSize = true;
+            this.lblValidacion.BackColor = System.Drawing.SystemColors.Control;
+            this.lblValidacion.ForeColor = System.Drawing.Color.Red;
+            this.lblValidacion.Location = new System.Drawing.Point(34, 50);
+            this.lblValidacion.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblValidacion.Name = "lblValidacion";
+            this.lblValidacion.Size = new System.Drawing.Size(34, 13);
+            this.lblValidacion.TabIndex = 4;
+            this.lblValidacion.Text = "Texto";
+            // 
             // btnValidar
             // 
-            this.btnValidar.Location = new System.Drawing.Point(278, 26);
+            this.btnValidar.Location = new System.Drawing.Point(208, 21);
+            this.btnValidar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnValidar.Name = "btnValidar";
-            this.btnValidar.Size = new System.Drawing.Size(75, 23);
+            this.btnValidar.Size = new System.Drawing.Size(56, 19);
             this.btnValidar.TabIndex = 1;
             this.btnValidar.Text = "Validar";
             this.btnValidar.UseVisualStyleBackColor = true;
@@ -156,33 +164,22 @@
             // 
             // txtCodigo
             // 
-            this.txtCodigo.Location = new System.Drawing.Point(47, 27);
+            this.txtCodigo.Location = new System.Drawing.Point(35, 22);
+            this.txtCodigo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtCodigo.Name = "txtCodigo";
-            this.txtCodigo.Size = new System.Drawing.Size(181, 22);
+            this.txtCodigo.Size = new System.Drawing.Size(137, 20);
             this.txtCodigo.TabIndex = 0;
-            // 
-            // lblValidacion
-            // 
-            this.lblValidacion.AutoSize = true;
-            this.lblValidacion.BackColor = System.Drawing.SystemColors.Control;
-            this.lblValidacion.ForeColor = System.Drawing.Color.Red;
-            this.lblValidacion.Location = new System.Drawing.Point(46, 61);
-            this.lblValidacion.Name = "lblValidacion";
-            this.lblValidacion.Size = new System.Drawing.Size(41, 16);
-            this.lblValidacion.TabIndex = 4;
-            this.lblValidacion.Text = "Texto";
             // 
             // MarcadorDeAsistencia
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(962, 525);
+            this.ClientSize = new System.Drawing.Size(722, 427);
             this.Controls.Add(this.lblHora);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.lblFecha);
             this.Controls.Add(this.gbTipoAsistencia);
             this.Controls.Add(this.pbCamera);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MarcadorDeAsistencia";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Control de Asistencia";
