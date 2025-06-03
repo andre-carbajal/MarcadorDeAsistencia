@@ -108,6 +108,7 @@ namespace MarcadorDeAsistencia
 
         private void DesactivarGroupBoxTipoAsistencia()
         {
+            empleado = null;
             gbTipoAsistencia.Enabled = false;
             lblValidacion.Text = string.Empty;
             cleanTxtCodigo();
@@ -221,7 +222,7 @@ namespace MarcadorDeAsistencia
             registroDiarioRepository.RegistrarSalida(empleado.idEmpleado, fecha.idFecha, DateTime.Now.TimeOfDay);
 
             MessageBox.Show("Salida registrada correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            gbTipoAsistencia.Enabled = false;
+            DesactivarGroupBoxTipoAsistencia();
         }
 
         private void btnInicioDescanso_Click(object sender, EventArgs e)
@@ -234,14 +235,12 @@ namespace MarcadorDeAsistencia
 
             var fecha = fechaRepository.ObtenerOInsertarFecha(DateTime.Today);
 
-            // Verifica que exista entrada y no salida
             if (!registroDiarioRepository.ExisteEntrada(empleado.idEmpleado, fecha.idFecha))
             {
                 MessageBox.Show("No existe una entrada registrada para este empleado en la fecha de hoy.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // Verifica que no exista salida
             var registro = registroDiarioRepository.ObtenerRegistro(empleado.idEmpleado, fecha.idFecha);
             if (registro == null || registro.horaSalida != null)
             {
@@ -252,7 +251,40 @@ namespace MarcadorDeAsistencia
             registroDiarioRepository.RegistrarInicioDescanso(empleado.idEmpleado, fecha.idFecha, DateTime.Now.TimeOfDay);
 
             MessageBox.Show("Inicio de descanso registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            gbTipoAsistencia.Enabled = false;
+            DesactivarGroupBoxTipoAsistencia();
+        }
+
+        private void btnFinDescanso_Click(object sender, EventArgs e)
+        {
+            if (empleado == null)
+            {
+                MessageBox.Show("Debe validar primero el empleado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var fecha = fechaRepository.ObtenerOInsertarFecha(DateTime.Today);
+
+            var registro = registroDiarioRepository.ObtenerRegistro(empleado.idEmpleado, fecha.idFecha);
+            if (registro == null || registro.horaEntrada == null)
+            {
+                MessageBox.Show("No existe una entrada registrada para este empleado en la fecha de hoy.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (registro.inicioDescanso == null)
+            {
+                MessageBox.Show("No se ha registrado un inicio de descanso para este empleado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (registro.horaSalida != null)
+            {
+                MessageBox.Show("Ya existe una salida registrada para este empleado en la fecha de hoy.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            registroDiarioRepository.RegistrarFinDescanso(empleado.idEmpleado, fecha.idFecha, DateTime.Now.TimeOfDay);
+
+            MessageBox.Show("Fin de descanso registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DesactivarGroupBoxTipoAsistencia();
         }
     }
 }

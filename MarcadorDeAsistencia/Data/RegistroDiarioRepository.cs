@@ -68,6 +68,33 @@ namespace MarcadorDeAsistencia.Data
             }
         }
 
+        public void RegistrarFinDescanso(string idEmpleado, int idFecha, TimeSpan horaFinDescanso)
+        {
+            try
+            {
+                var registro = db.RegistroDiario.FirstOrDefault(r =>
+                    r.idEmpleado == idEmpleado &&
+                    r.idFecha == idFecha &&
+                    r.horaEntrada != null &&
+                    r.inicioDescanso != null &&
+                    r.horaSalida == null);
+
+                if (registro != null)
+                {
+                    registro.finDescanso = horaFinDescanso;
+                    db.SubmitChanges();
+                }
+                else
+                {
+                    MessageBox.Show("No se puede registrar el fin de descanso. Verifique que exista una entrada, un inicio de descanso y que no haya salida registrada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al registrar el fin de descanso: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         public bool ExisteEntrada(string idEmpleado, int idFecha)
         {
             return db.RegistroDiario.Any(r => r.idEmpleado.Equals(idEmpleado) && r.idFecha == idFecha && r.horaEntrada != null);
