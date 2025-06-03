@@ -1,5 +1,6 @@
 ﻿using Emgu.CV;
 using MarcadorDeAsistencia.Clases;
+using MarcadorDeAsistencia.Data;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,8 +12,12 @@ namespace MarcadorDeAsistencia
     {
         private bool isCapturing = false;
         private VideoCapture capture;
+        private Empleado empleado;
 
-        private FaceDetectionService fds = new FaceDetectionService();
+        private FaceDetectionService faceDetectionService = new FaceDetectionService();
+        private EmpleadoRepository empleadoRepository = new EmpleadoRepository();
+        private RegistroDiarioRepository registroDiarioRepository = new RegistroDiarioRepository();
+        private FechaRepository FechaRepository = new FechaRepository();
 
         public MarcadorDeAsistencia()
         {
@@ -101,6 +106,13 @@ namespace MarcadorDeAsistencia
             txtCodigo.Focus();
         }
 
+        private void DesactivarGroupBoxTipoAsistencia()
+        {
+            gbTipoAsistencia.Enabled = false;
+            lblValidacion.Text = string.Empty;
+            cleanTxtCodigo();
+        }
+
         private void btnValidar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtCodigo.Text))
@@ -121,18 +133,19 @@ namespace MarcadorDeAsistencia
                         if (!frame.IsEmpty)
                         {
                             var bitmap = frame.ToBitmap();
-                            fds.SetFrame(bitmap);
-                            fds.SetIdEmpleado(txtCodigo.Text);
+                            faceDetectionService.SetFrame(bitmap);
+                            faceDetectionService.SetIdEmpleado(txtCodigo.Text);
 
                             Task.Run( async () =>
                             {
-                                var result = await fds.DetectPerson();
+                                var result = await faceDetectionService.DetectPerson();
                                 
                                 if (result != null && result.result)
                                 {
                                     Invoke(new Action(() =>
                                     {
-                                        lblValidacion.Text = "Código válido. Por favor, espere...";
+                                        lblValidacion.Text = "Código válido. Procesando asistencia...";
+                                        empleado = empleadoRepository.ObtenerEmpleado(txtCodigo.Text);
                                         gbTipoAsistencia.Enabled = true;
                                         cleanTxtCodigo();
                                         StopCamera();
@@ -157,6 +170,39 @@ namespace MarcadorDeAsistencia
                     txtCodigo.Clear();
                 }
             }
+        }
+
+        private void btnEntrada_Click(object sender, EventArgs e)
+        {
+            if (empleado == null)
+            {
+                MessageBox.Show("Debe validar primero el empleado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var fechaRepo = new FechaRepository();
+            var registroRepo = new RegistroDiarioRepository();
+
+            var fecha = fechaRepo.ObtenerOInsertarFecha(DateTime.Today);
+
+            if (registroRepo.ExisteEntrada(empleado.idEmpleado, fecha.idFecha))
+            {
+                MessageBox.Show("Ya existe una entrada registrada para este empleado en la fecha de hoy.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var registro = new RegistroDiario
+            {
+                idEmpleado = empleado.idEmpleado,
+                idFecha = fecha.idFecha,
+                horaEntrada = DateTime.Now.TimeOfDay
+            };
+
+            registroRepo.registrarRegistroDiario(registro);
+
+            MessageBox.Show("Entrada registrada correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            gbTipoAsistencia.Enabled = false;
+            DesactivarGroupBoxTipoAsistencia();
         }
     }
 }

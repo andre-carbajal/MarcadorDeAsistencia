@@ -1,12 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarcadorDeAsistencia.Data
 {
     public class FechaRepository
     {
+        private DataClassesTablasDataContext db = new DataClassesTablasDataContext();
+
+        public Fecha ObtenerOInsertarFecha(DateTime fecha)
+        {
+            int dia = fecha.Day;
+            int mes = fecha.Month;
+            int año = fecha.Year;
+
+            var fechaDb = db.Fecha.FirstOrDefault(f => f.dia.Equals(dia) && f.mes.Equals(mes) && f.ano.Equals(año));
+            if (fechaDb == null)
+            {
+                fechaDb = new Fecha { dia = dia.ToString(), mes = mes.ToString(), ano = año.ToString() };
+                db.Fecha.InsertOnSubmit(fechaDb);
+                db.SubmitChanges();
+            }
+            return fechaDb;
+        }
     }
 }
