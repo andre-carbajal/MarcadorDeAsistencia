@@ -91,36 +91,36 @@
             // 
             // btnFinDescanso
             // 
-            this.btnFinDescanso.Location = new System.Drawing.Point(161, 52);
+            this.btnFinDescanso.Location = new System.Drawing.Point(153, 52);
             this.btnFinDescanso.Name = "btnFinDescanso";
-            this.btnFinDescanso.Size = new System.Drawing.Size(104, 23);
+            this.btnFinDescanso.Size = new System.Drawing.Size(120, 23);
             this.btnFinDescanso.TabIndex = 3;
             this.btnFinDescanso.Text = "Fin de Descanso";
             this.btnFinDescanso.UseVisualStyleBackColor = true;
             // 
             // btnInicioDescanso
             // 
-            this.btnInicioDescanso.Location = new System.Drawing.Point(35, 53);
+            this.btnInicioDescanso.Location = new System.Drawing.Point(27, 53);
             this.btnInicioDescanso.Name = "btnInicioDescanso";
-            this.btnInicioDescanso.Size = new System.Drawing.Size(104, 23);
+            this.btnInicioDescanso.Size = new System.Drawing.Size(120, 23);
             this.btnInicioDescanso.TabIndex = 2;
             this.btnInicioDescanso.Text = "Inicio de Descanso";
             this.btnInicioDescanso.UseVisualStyleBackColor = true;
             // 
             // btnSalida
             // 
-            this.btnSalida.Location = new System.Drawing.Point(161, 19);
+            this.btnSalida.Location = new System.Drawing.Point(153, 19);
             this.btnSalida.Name = "btnSalida";
-            this.btnSalida.Size = new System.Drawing.Size(104, 23);
+            this.btnSalida.Size = new System.Drawing.Size(120, 23);
             this.btnSalida.TabIndex = 1;
             this.btnSalida.Text = "Salida";
             this.btnSalida.UseVisualStyleBackColor = true;
             // 
             // btnEntrada
             // 
-            this.btnEntrada.Location = new System.Drawing.Point(35, 19);
+            this.btnEntrada.Location = new System.Drawing.Point(27, 19);
             this.btnEntrada.Name = "btnEntrada";
-            this.btnEntrada.Size = new System.Drawing.Size(104, 23);
+            this.btnEntrada.Size = new System.Drawing.Size(120, 23);
             this.btnEntrada.TabIndex = 0;
             this.btnEntrada.Text = "Entrada";
             this.btnEntrada.UseVisualStyleBackColor = true;
@@ -131,9 +131,9 @@
             this.groupBox3.Controls.Add(this.btnValidar);
             this.groupBox3.Controls.Add(this.txtCodigo);
             this.groupBox3.Location = new System.Drawing.Point(420, 48);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(290, 72);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
@@ -154,7 +154,7 @@
             // btnValidar
             // 
             this.btnValidar.Location = new System.Drawing.Point(208, 21);
-            this.btnValidar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnValidar.Margin = new System.Windows.Forms.Padding(2);
             this.btnValidar.Name = "btnValidar";
             this.btnValidar.Size = new System.Drawing.Size(56, 19);
             this.btnValidar.TabIndex = 1;
@@ -165,7 +165,7 @@
             // txtCodigo
             // 
             this.txtCodigo.Location = new System.Drawing.Point(35, 22);
-            this.txtCodigo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtCodigo.Margin = new System.Windows.Forms.Padding(2);
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(137, 20);
             this.txtCodigo.TabIndex = 0;

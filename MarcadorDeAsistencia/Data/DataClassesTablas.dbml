@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="db_asistencia" Class="DataClassesTablasDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=proyectos-upt.database.windows.net;Initial Catalog=db_asistencia;Persist Security Info=True;User ID=proyectos;Encrypt=False;Trust Server Certificate=True" SettingsObjectName="MarcadorDeAsistencia.Properties.Settings" SettingsPropertyName="db_asistenciaConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Empleado" Member="Empleado">
+    <Type Name="Empleado">
+      <Column Name="idEmpleado" Type="System.String" DbType="Char(8) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombreEmpleado" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="apellidoEmpleado" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="idRol" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idTurno" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Empleado_RegistroDiario" Member="RegistroDiario" ThisKey="idEmpleado" OtherKey="idEmpleado" Type="RegistroDiario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Fecha" Member="Fecha">
+    <Type Name="Fecha">
+      <Column Name="idFecha" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="dia" Type="System.String" DbType="Char(2) NOT NULL" CanBeNull="false" />
+      <Column Name="mes" Type="System.String" DbType="Char(2) NOT NULL" CanBeNull="false" />
+      <Column Name="ano" Type="System.String" DbType="Char(4) NOT NULL" CanBeNull="false" />
+      <Association Name="Fecha_RegistroDiario" Member="RegistroDiario" ThisKey="idFecha" OtherKey="idFecha" Type="RegistroDiario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RegistroDiario" Member="RegistroDiario">
+    <Type Name="RegistroDiario">
+      <Column Name="idFecha" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idEmpleado" Type="System.String" DbType="Char(8) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="horaEntrada" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="inicioDescanso" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="finDescanso" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="horaSalida" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Association Name="Empleado_RegistroDiario" Member="Empleado" ThisKey="idEmpleado" OtherKey="idEmpleado" Type="Empleado" IsForeignKey="true" />
+      <Association Name="Fecha_RegistroDiario" Member="Fecha" ThisKey="idFecha" OtherKey="idFecha" Type="Fecha" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
