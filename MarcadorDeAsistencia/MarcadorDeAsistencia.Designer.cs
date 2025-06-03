@@ -106,6 +106,7 @@
             this.btnInicioDescanso.TabIndex = 2;
             this.btnInicioDescanso.Text = "Inicio de Descanso";
             this.btnInicioDescanso.UseVisualStyleBackColor = true;
+            this.btnInicioDescanso.Click += new System.EventHandler(this.btnInicioDescanso_Click);
             // 
             // btnSalida
             // 
