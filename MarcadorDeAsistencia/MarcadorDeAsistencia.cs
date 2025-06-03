@@ -17,7 +17,7 @@ namespace MarcadorDeAsistencia
         private FaceDetectionService faceDetectionService = new FaceDetectionService();
         private EmpleadoRepository empleadoRepository = new EmpleadoRepository();
         private RegistroDiarioRepository registroDiarioRepository = new RegistroDiarioRepository();
-        private FechaRepository FechaRepository = new FechaRepository();
+        private FechaRepository fechaRepository = new FechaRepository();
 
         public MarcadorDeAsistencia()
         {
@@ -180,12 +180,9 @@ namespace MarcadorDeAsistencia
                 return;
             }
 
-            var fechaRepo = new FechaRepository();
-            var registroRepo = new RegistroDiarioRepository();
+            var fecha = fechaRepository.ObtenerOInsertarFecha(DateTime.Today);
 
-            var fecha = fechaRepo.ObtenerOInsertarFecha(DateTime.Today);
-
-            if (registroRepo.ExisteEntrada(empleado.idEmpleado, fecha.idFecha))
+            if (registroDiarioRepository.ExisteEntrada(empleado.idEmpleado, fecha.idFecha))
             {
                 MessageBox.Show("Ya existe una entrada registrada para este empleado en la fecha de hoy.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -198,11 +195,33 @@ namespace MarcadorDeAsistencia
                 horaEntrada = DateTime.Now.TimeOfDay
             };
 
-            registroRepo.registrarRegistroDiario(registro);
+            registroDiarioRepository.registrarRegistroDiario(registro);
 
             MessageBox.Show("Entrada registrada correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             gbTipoAsistencia.Enabled = false;
             DesactivarGroupBoxTipoAsistencia();
+        }
+
+        private void btnSalida_Click(object sender, EventArgs e)
+        {
+            if (empleado == null)
+            {
+                MessageBox.Show("Debe validar primero el empleado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var fecha = fechaRepository.ObtenerOInsertarFecha(DateTime.Today);
+
+            if (!registroDiarioRepository.ExisteEntrada(empleado.idEmpleado, fecha.idFecha))
+            {
+                MessageBox.Show("No existe una entrada registrada para este empleado en la fecha de hoy.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            registroDiarioRepository.RegistrarSalida(empleado.idEmpleado, fecha.idFecha, DateTime.Now.TimeOfDay);
+
+            MessageBox.Show("Salida registrada correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            gbTipoAsistencia.Enabled = false;
         }
     }
 }

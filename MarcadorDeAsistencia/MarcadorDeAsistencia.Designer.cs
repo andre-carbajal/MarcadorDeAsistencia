@@ -115,6 +115,7 @@
             this.btnSalida.TabIndex = 1;
             this.btnSalida.Text = "Salida";
             this.btnSalida.UseVisualStyleBackColor = true;
+            this.btnSalida.Click += new System.EventHandler(this.btnSalida_Click);
             // 
             // btnEntrada
             // 
