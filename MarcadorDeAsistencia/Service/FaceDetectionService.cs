@@ -15,32 +15,20 @@ namespace MarcadorDeAsistencia.Clases
         private const string url = "http://localhost:5000";
 
         private static readonly HttpClient client = new HttpClient();
-        private Bitmap lastFrame;
-        private string idEmpleado;
 
-        public void SetFrame(Bitmap frame)
-        {
-            lastFrame = frame;
-        }
-
-        public void SetIdEmpleado(string id)
-        {
-            idEmpleado = id;
-        }
-
-        public async Task<RecognizeResponse> DetectPerson()
+        public async Task<RecognizeResponse> DetectPerson(string id, Bitmap frame)
         {
             try
             {
                 await Task.Delay(1000);
 
-                string base64Image = ConvertImageToBase64(lastFrame);
+                string base64Image = ConvertImageToBase64(frame);
                 Console.WriteLine($"{base64Image}");
 
                 var dto = new RecognizeDto
                 {
                     image = base64Image,
-                    id_empleado = idEmpleado
+                    id_empleado = id
                 };
 
                 var json = JsonConvert.SerializeObject(dto);
