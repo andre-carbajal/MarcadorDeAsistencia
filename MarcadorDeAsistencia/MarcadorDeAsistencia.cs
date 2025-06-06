@@ -1,7 +1,8 @@
-﻿using Emgu.CV;
+﻿using AForge.Video.DirectShow;
 using MarcadorDeAsistencia.Clases;
 using MarcadorDeAsistencia.Data;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -10,94 +11,36 @@ namespace MarcadorDeAsistencia
 {
     public partial class MarcadorDeAsistencia : Form
     {
-        private bool isCapturing = false;
-        private VideoCapture capture;
+        private FilterInfoCollection videoDevices;
+        private VideoCaptureDevice videoSource;
         private Empleado empleado;
 
-        private FaceDetectionService faceDetectionService = new FaceDetectionService();
-        private EmpleadoRepository empleadoRepository = new EmpleadoRepository();
-        private RegistroDiarioRepository registroDiarioRepository = new RegistroDiarioRepository();
-        private FechaRepository fechaRepository = new FechaRepository();
+        private readonly FaceDetectionService faceDetectionService = new FaceDetectionService();
+        private readonly EmpleadoRepository empleadoRepository = new EmpleadoRepository();
+        private readonly RegistroDiarioRepository registroDiarioRepository = new RegistroDiarioRepository();
+        private readonly FechaRepository fechaRepository = new FechaRepository();
 
         public MarcadorDeAsistencia()
         {
             InitializeComponent();
-            lblFecha.Text = FechaUtil.FormatearFechaLarga(DateTime.Now);
+            gbTipoAsistencia.Enabled = false;
 
             timerHora.Interval = 1000;
             timerHora.Tick += TimerHora_Tick;
             timerHora.Start();
 
+            lblFecha.Text = FechaUtil.FormatearFechaLarga(DateTime.Now);
+
             lblHora.Text = FechaUtil.FormatearHora(DateTime.Now);
 
             lblValidacion.Text = string.Empty;
 
-            gbTipoAsistencia.Enabled = false;
+            btnCancelar.Enabled = false;
         }
 
         private void TimerHora_Tick(object sender, EventArgs e)
         {
             lblHora.Text = FechaUtil.FormatearHora(DateTime.Now);
-        }
-
-        private void RunCamara()
-        {
-            try
-            {
-                if (isCapturing) return;
-
-                capture = new VideoCapture(0); // Camara por defecto (0)
-
-                if (!capture.IsOpened)
-                {
-                    MessageBox.Show("No se pudo abrir la cámara.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                isCapturing = true;
-
-                Application.Idle += ProcessFrame;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error iniciando la cámara: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void MarcadorDeAsistencia_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            StopCamera();
-        }
-
-        private void StopCamera()
-        {
-            if (isCapturing)
-            {
-                Application.Idle -= ProcessFrame;
-                isCapturing = false;
-                capture?.Dispose();
-                capture = null;
-            }
-        }
-
-        private void ProcessFrame(object sender, EventArgs e)
-        {
-            if (capture != null && isCapturing)
-            {
-                try
-                {
-                    using (Mat frame = new Mat())
-                    {
-                        capture.Read(frame);
-
-                        if (!frame.IsEmpty) pbCamera.Image = frame.ToBitmap();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error processing frame: {ex.Message}");
-                }
-            }
         }
 
         private void cleanTxtCodigo()
@@ -121,55 +64,165 @@ namespace MarcadorDeAsistencia
                 MessageBox.Show("Por favor, ingrese un código.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            else
+
+            if (!(txtCodigo.Text.Length == 8 && txtCodigo.Text.All(char.IsDigit)))
             {
-                if (txtCodigo.Text.Length == 8 && txtCodigo.Text.All(char.IsDigit))
+                MessageBox.Show("El código debe tener exactamente 8 números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cleanTxtCodigo();
+                return;
+            }
+
+            lblValidacion.Text = "Validando código con reconocimiento facial...";
+            RunCamara();
+
+            Task.Run(async () =>
+            {
+                try
                 {
-                    lblValidacion.Text = "Validando código con reconocimiento facial...";
-                    RunCamara();
-                    using (Mat frame = new Mat()) 
-                    { 
-                        capture.Read(frame);
+                    await Task.Delay(2000);
 
-                        if (!frame.IsEmpty)
+                    Bitmap frameCopy = null;
+                    pbCamera.Invoke((MethodInvoker)delegate
+                    {
+                        if (pbCamera.Image != null)
+                            frameCopy = new Bitmap(pbCamera.Image);
+                    });
+                    if (frameCopy == null)
+                    {
+                        Invoke(new Action(() =>
                         {
-                            var bitmap = frame.ToBitmap();
-                            faceDetectionService.SetFrame(bitmap);
-                            faceDetectionService.SetIdEmpleado(txtCodigo.Text);
-
-                            Task.Run( async () =>
-                            {
-                                var result = await faceDetectionService.DetectPerson();
-                                
-                                if (result != null && result.result)
-                                {
-                                    Invoke(new Action(() =>
-                                    {
-                                        lblValidacion.Text = "Código válido. Procesando asistencia...";
-                                        empleado = empleadoRepository.ObtenerEmpleado(txtCodigo.Text);
-                                        gbTipoAsistencia.Enabled = true;
-                                        cleanTxtCodigo();
-                                        StopCamera();
-                                    }));
-                                }
-                                else
-                                {
-                                    Invoke(new Action(() =>
-                                    {
-                                        lblValidacion.Text = "Código inválido. Por favor, intente nuevamente.";
-                                        cleanTxtCodigo();
-                                        StopCamera();
-                                    }));
-                                }
-                            });
-                        }
+                            lblValidacion.Text = "No se pudo capturar la imagen de la cámara.";
+                            cleanTxtCodigo();
+                            StopCamera();
+                        }));
+                        return;
                     }
+
+                    var result = await faceDetectionService.DetectPerson(txtCodigo.Text, frameCopy);
+
+                    frameCopy.Dispose();
+
+                    if (result != null && result.result)
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            StopCamera();
+                            empleado = empleadoRepository.ObtenerEmpleado(txtCodigo.Text);
+                            MessageBox.Show($"Empleado: {empleado.nombreEmpleado} {empleado.apellidoEmpleado}", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            lblValidacion.Text = "Codigo valido.";
+                            gbTipoAsistencia.Enabled = true;
+                            btnCancelar.Enabled = true;
+                            cleanTxtCodigo();
+                        }));
+                    }
+                    else
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            lblValidacion.Text = "Código inválido. Por favor, intente nuevamente.";
+                            cleanTxtCodigo();
+                            StopCamera();
+                        }));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al procesar la imagen: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    StopCamera();
+                }
+            });
+        }
+
+        private void RunCamara()
+        {
+            try
+            {
+                videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+                if (videoDevices.Count == 0)
+                {
+                    MessageBox.Show("No se encontró ninguna cámara.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
+                videoSource.NewFrame += VideoSource_NewFrame;
+                videoSource.Start();
+
+                pbCamera.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al inicializar la cámara: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StopCamera();
+            }
+        }
+
+        private void VideoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
+        {
+            try
+            {
+                Bitmap bitmap = (Bitmap)eventArgs.Frame.Clone();
+
+                if (pbCamera.InvokeRequired)
+                {
+                    pbCamera.BeginInvoke((MethodInvoker)delegate
+                    {
+                        try
+                        {
+                            var oldImage = pbCamera.Image;
+                            pbCamera.Image = (Bitmap)bitmap.Clone();
+                            oldImage?.Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Error updating camera image: {ex.Message}");
+                        }
+                        finally
+                        {
+                            bitmap.Dispose();
+                        }
+                    });
                 }
                 else
                 {
-                    MessageBox.Show("El código debe tener exactamente 8 numeros.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtCodigo.Clear();
+                    var oldImage = pbCamera.Image;
+                    pbCamera.Image = (Bitmap)bitmap.Clone();
+                    oldImage?.Dispose();
+                    bitmap.Dispose();
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in VideoSource_NewFrame: {ex.Message}");
+            }
+        }
+
+        private void MarcadorDeAsistencia_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            StopCamera();
+        }
+
+        private void StopCamera()
+        {
+            try
+            {
+                if (videoSource != null && videoSource.IsRunning)
+                {
+                    videoSource.SignalToStop();
+                    videoSource.WaitForStop();
+                    videoSource.NewFrame -= VideoSource_NewFrame;
+                }
+                pbCamera.Image?.Dispose();
+                pbCamera.Image = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al detener la cámara: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -285,6 +338,12 @@ namespace MarcadorDeAsistencia
 
             MessageBox.Show("Fin de descanso registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             DesactivarGroupBoxTipoAsistencia();
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            DesactivarGroupBoxTipoAsistencia();
+            btnCancelar.Enabled = false;
         }
     }
 }

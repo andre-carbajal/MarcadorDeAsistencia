@@ -42,6 +42,7 @@
             this.lblValidacion = new System.Windows.Forms.Label();
             this.btnValidar = new System.Windows.Forms.Button();
             this.txtCodigo = new System.Windows.Forms.TextBox();
+            this.btnCancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbCamera)).BeginInit();
             this.gbTipoAsistencia.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -174,11 +175,22 @@
             this.txtCodigo.Size = new System.Drawing.Size(137, 20);
             this.txtCodigo.TabIndex = 0;
             // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(635, 229);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.TabIndex = 4;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
             // MarcadorDeAsistencia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(722, 427);
+            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.lblHora);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.lblFecha);
@@ -212,6 +224,7 @@
         private System.Windows.Forms.Button btnValidar;
         private System.Windows.Forms.TextBox txtCodigo;
         private System.Windows.Forms.Label lblValidacion;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }
 

@@ -20,8 +20,6 @@ namespace MarcadorDeAsistencia.Clases
         {
             try
             {
-                await Task.Delay(1000);
-
                 string base64Image = ConvertImageToBase64(frame);
                 Console.WriteLine($"{base64Image}");
 
