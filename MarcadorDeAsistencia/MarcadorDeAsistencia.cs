@@ -79,6 +79,11 @@ namespace MarcadorDeAsistencia
             {
                 try
                 {
+                    while (videoSource == null || !videoSource.IsRunning)
+                    {
+                        System.Threading.Thread.Sleep(100);
+                    }
+
                     await Task.Delay(2000);
 
                     Bitmap frameCopy = null;
