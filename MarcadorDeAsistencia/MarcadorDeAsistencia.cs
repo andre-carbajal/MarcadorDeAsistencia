@@ -19,6 +19,11 @@ namespace MarcadorDeAsistencia
         private readonly EmpleadoRepository empleadoRepository = new EmpleadoRepository();
         private readonly RegistroDiarioRepository registroDiarioRepository = new RegistroDiarioRepository();
         private readonly FechaRepository fechaRepository = new FechaRepository();
+        private readonly EstadoAsistenciaRepository estadoAsistenciaRepository = new EstadoAsistenciaRepository();
+        private readonly TurnoRepository turnoRepository = new TurnoRepository();
+
+        private const int toleranciaAsistencia = 15;
+        private const int tiempoFalta = 30;
 
         public MarcadorDeAsistencia()
         {
@@ -247,11 +252,31 @@ namespace MarcadorDeAsistencia
                 return;
             }
 
+            TimeSpan horaEntradaProgramada = turnoRepository.ObtenerTurno(empleado.idRol).horaInicio; 
+            TimeSpan horaActual = DateTime.Now.TimeOfDay;
+            int minutosRetraso = (int)(horaActual - horaEntradaProgramada).TotalMinutes;
+
+            int idEstadoAsistencia;
+
+            if (minutosRetraso <= toleranciaAsistencia)
+            {
+                idEstadoAsistencia = estadoAsistenciaRepository.obtenerEstado("Asistencia").idEvento;
+            }
+            else if (minutosRetraso >= tiempoFalta)
+            {
+                idEstadoAsistencia = estadoAsistenciaRepository.obtenerEstado("Falta").idEvento;
+            }
+            else
+            {
+                idEstadoAsistencia = estadoAsistenciaRepository.obtenerEstado("Tardanza").idEvento;
+            }
+
             var registro = new RegistroDiario
             {
                 idEmpleado = empleado.idEmpleado,
                 idFecha = fecha.idFecha,
-                horaEntrada = DateTime.Now.TimeOfDay
+                horaEntrada = horaActual,
+                idEstadoAsistencia = idEstadoAsistencia
             };
 
             registroDiarioRepository.registrarRegistroDiario(registro);

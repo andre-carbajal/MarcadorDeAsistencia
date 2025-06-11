@@ -75,8 +75,10 @@
       <DependentUpon>DataClassesTablas.dbml</DependentUpon>
     </Compile>
     <Compile Include="Data\EmpleadoRepository.cs" />
+    <Compile Include="Data\EstadoAsistenciaRepository.cs" />
     <Compile Include="Data\FechaRepository.cs" />
     <Compile Include="Data\RegistroDiarioRepository.cs" />
+    <Compile Include="Data\TurnoRepository.cs" />
     <Compile Include="Service\FaceDetectionService.cs" />
     <Compile Include="Util\FechaUtil.cs" />
     <Compile Include="Models\Dto\RecognizeDto.cs" />
