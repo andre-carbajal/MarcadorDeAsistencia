@@ -12,7 +12,7 @@ namespace MarcadorDeAsistencia.Clases
 {
     internal class FaceDetectionService
     {
-        private const string url = "http://localhost:5000";
+        private const string url = "https://fda.anvian.net";
 
         private static readonly HttpClient client = new HttpClient();
 

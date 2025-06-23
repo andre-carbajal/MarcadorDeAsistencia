@@ -104,5 +104,24 @@ namespace MarcadorDeAsistencia.Data
         {
             return db.RegistroDiario.FirstOrDefault(r => r.idEmpleado == idEmpleado && r.idFecha == idFecha && r.horaEntrada != null);
         }
+
+        public string ObtenerEstadoAsistencia(string idEmpleado, DateTime now)
+        {
+            var registro = (from r in db.RegistroDiario
+                            join f in db.Fecha on r.idFecha equals f.idFecha
+                            where r.idEmpleado == idEmpleado
+                                  && f.dia.Equals(now.Day)
+                                  && f.mes.Equals(now.Month)
+                                  && f.Equals(now.Year)
+                            select r).FirstOrDefault();
+
+            if (registro == null)
+                return "No registrado";
+            if (registro.horaSalida != null)
+                return "Salida";
+            if (registro.horaEntrada != null)
+                return "Entrada";
+            return "No registrado";
+        }
     }
 }
