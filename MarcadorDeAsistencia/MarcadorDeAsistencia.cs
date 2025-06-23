@@ -37,7 +37,6 @@ namespace MarcadorDeAsistencia
             lblHora.Text = FechaUtil.FormatearHora(DateTime.Now);
 
             lblValidacion.Text = string.Empty;
-            btnCancelar.Enabled = false;
             lblNombre.Text = string.Empty;
             lblTipoyHora.Text = string.Empty;
         }
@@ -115,9 +114,41 @@ namespace MarcadorDeAsistencia
                             empleado = empleadoRepository.ObtenerEmpleado(txtCodigo.Text);
                             lblNombre.Text = $"{empleado.nombreEmpleado} {empleado.apellidoEmpleado}";
                             lblTipoyHora.Text = $"{registroDiarioRepository.ObtenerEstadoAsistencia(empleado.idEmpleado, DateTime.Now)} - {FechaUtil.FormatearHora(DateTime.Now)}";
-                            lblValidacion.Text = "Codigo valido.";
-                            btnCancelar.Enabled = true;
                             cleanTxtCodigo();
+
+                            var fecha = fechaRepository.ObtenerOInsertarFecha(DateTime.Today);
+                            if (!registroDiarioRepository.ExisteEntrada(empleado.idEmpleado, fecha.idFecha))
+                            {
+                                TimeSpan horaEntradaProgramada = turnoRepository.ObtenerTurno(empleado.idRol).horaInicio;
+                                TimeSpan horaActual = DateTime.Now.TimeOfDay;
+                                int minutosRetraso = (int)(horaActual - horaEntradaProgramada).TotalMinutes;
+
+                                int idEstadoAsistencia;
+
+                                if (minutosRetraso <= toleranciaAsistencia)
+                                {
+                                    idEstadoAsistencia = estadoAsistenciaRepository.obtenerEstado("Asistencia").idEvento;
+                                }
+                                else if (minutosRetraso >= tiempoFalta)
+                                {
+                                    idEstadoAsistencia = estadoAsistenciaRepository.obtenerEstado("Falta").idEvento;
+                                }
+                                else
+                                {
+                                    idEstadoAsistencia = estadoAsistenciaRepository.obtenerEstado("Tardanza").idEvento;
+                                }
+
+                                var registro = new RegistroDiario
+                                {
+                                    idEmpleado = empleado.idEmpleado,
+                                    idFecha = fecha.idFecha,
+                                    horaEntrada = horaActual,
+                                    idEstadoAsistencia = idEstadoAsistencia
+                                };
+
+                                registroDiarioRepository.registrarRegistroDiario(registro);
+                            }
+
                         }));
                     }
                     else
@@ -179,6 +210,7 @@ namespace MarcadorDeAsistencia
             pbCamera.Image = null;
 
             pbLogo.Visible = true;
+            lblValidacion.Text = string.Empty;
         }
 
         private void RunCamara()
@@ -246,12 +278,6 @@ namespace MarcadorDeAsistencia
             {
                 System.Diagnostics.Debug.WriteLine($"Error in VideoSource_NewFrame: {ex.Message}");
             }
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            DesactivarGroupBoxTipoAsistencia();
-            btnCancelar.Enabled = false;
         }
 
         private void DesactivarGroupBoxTipoAsistencia()

@@ -36,7 +36,6 @@
             this.btnCerrar = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel4 = new Guna.UI2.WinForms.Guna2Panel();
             this.pbLogo = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.btnCancelar = new Guna.UI2.WinForms.Guna2Button();
             this.lblValidacion = new System.Windows.Forms.Label();
             this.guna2GroupBox3 = new Guna.UI2.WinForms.Guna2GroupBox();
             this.lblTipoyHora = new System.Windows.Forms.Label();
@@ -110,7 +109,6 @@
             this.guna2Panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(236)))), ((int)(((byte)(222)))));
             this.guna2Panel4.BorderRadius = 40;
             this.guna2Panel4.Controls.Add(this.pbLogo);
-            this.guna2Panel4.Controls.Add(this.btnCancelar);
             this.guna2Panel4.Controls.Add(this.lblValidacion);
             this.guna2Panel4.Controls.Add(this.guna2GroupBox3);
             this.guna2Panel4.Controls.Add(this.pbCamera);
@@ -133,24 +131,6 @@
             this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbLogo.TabIndex = 15;
             this.pbLogo.TabStop = false;
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.AutoRoundedCorners = true;
-            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(236)))), ((int)(((byte)(222)))));
-            this.btnCancelar.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnCancelar.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnCancelar.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnCancelar.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnCancelar.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(185)))), ((int)(((byte)(148)))));
-            this.btnCancelar.Font = new System.Drawing.Font("Artifakt Element", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.ForeColor = System.Drawing.Color.White;
-            this.btnCancelar.Location = new System.Drawing.Point(724, 432);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(102, 30);
-            this.btnCancelar.TabIndex = 9;
-            this.btnCancelar.Text = "CANCELAR";
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // lblValidacion
             // 
@@ -390,7 +370,6 @@
         private Guna.UI2.WinForms.Guna2Button btnCerrar;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel4;
         private Guna.UI2.WinForms.Guna2PictureBox pbLogo;
-        private Guna.UI2.WinForms.Guna2Button btnCancelar;
         private System.Windows.Forms.Label lblValidacion;
         private Guna.UI2.WinForms.Guna2GroupBox guna2GroupBox3;
         private System.Windows.Forms.Label lblTipoyHora;
