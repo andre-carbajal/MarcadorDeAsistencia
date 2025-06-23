@@ -150,7 +150,7 @@ namespace MarcadorDeAsistencia
                                     var registro = registroDiarioRepository.ObtenerRegistro(empleado.idEmpleado, fecha.idFecha);
                                     if (registro != null && registro.horaSalida != null)
                                     {
-                                        MessageBox.Show("Ya existe una salida registrada para este empleado en la fecha de hoy.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        MessageBox.Show("Ya existe una salida registrada.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         gbDescanso.Enabled = false;
                                         return;
                                     }

@@ -1,29 +1,22 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace MarcadorDeAsistencia.Data
 {
     public class RegistroDiarioRepository
     {
-        DataClassesTablasDataContext db = new DataClassesTablasDataContext();
-
         public void registrarRegistroDiario(RegistroDiario registro)
         {
-            try
+            using (var db = new DataClassesTablasDataContext())
             {
                 db.RegistroDiario.InsertOnSubmit(registro);
                 db.SubmitChanges();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al registrar asistencia: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         public void RegistrarSalida(string idEmpleado, int idFecha, TimeSpan horaSalida)
         {
-            try
+            using (var db = new DataClassesTablasDataContext())
             {
                 var registro = db.RegistroDiario.FirstOrDefault(r => r.idEmpleado == idEmpleado && r.idFecha == idFecha && r.horaEntrada != null);
                 if (registro != null)
@@ -31,20 +24,12 @@ namespace MarcadorDeAsistencia.Data
                     registro.horaSalida = horaSalida;
                     db.SubmitChanges();
                 }
-                else
-                {
-                    MessageBox.Show("No existe una entrada registrada para este empleado en la fecha de hoy.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al registrar la salida: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         public void RegistrarInicioDescanso(string idEmpleado, int idFecha, TimeSpan horaInicioDescanso)
         {
-            try
+            using (var db = new DataClassesTablasDataContext())
             {
                 var registro = db.RegistroDiario.FirstOrDefault(r =>
                     r.idEmpleado == idEmpleado &&
@@ -57,20 +42,12 @@ namespace MarcadorDeAsistencia.Data
                     registro.horaEntrada = horaInicioDescanso;
                     db.SubmitChanges();
                 }
-                else
-                {
-                    MessageBox.Show("No se puede registrar el inicio de descanso. Verifique que exista una entrada y no haya salida registrada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al registrar el inicio de descanso: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         public void RegistrarFinDescanso(string idEmpleado, int idFecha, TimeSpan horaFinDescanso)
         {
-            try
+            using (var db = new DataClassesTablasDataContext())
             {
                 var registro = db.RegistroDiario.FirstOrDefault(r =>
                     r.idEmpleado == idEmpleado &&
@@ -84,38 +61,40 @@ namespace MarcadorDeAsistencia.Data
                     registro.finDescanso = horaFinDescanso;
                     db.SubmitChanges();
                 }
-                else
-                {
-                    MessageBox.Show("No se puede registrar el fin de descanso. Verifique que exista una entrada, un inicio de descanso y que no haya salida registrada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al registrar el fin de descanso: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         public bool ExisteEntrada(string idEmpleado, int idFecha)
         {
-            return db.RegistroDiario.Any(r => r.idEmpleado.Equals(idEmpleado) && r.idFecha == idFecha && r.horaEntrada != null);
+            using (var db = new DataClassesTablasDataContext())
+            {
+                return db.RegistroDiario.Any(r => r.idEmpleado.Equals(idEmpleado) && r.idFecha == idFecha && r.horaEntrada != null);
+            }
         }
 
         public RegistroDiario ObtenerRegistro(string idEmpleado, int idFecha)
         {
-            return db.RegistroDiario.FirstOrDefault(r => r.idEmpleado == idEmpleado && r.idFecha == idFecha && r.horaEntrada != null);
+            using (var db = new DataClassesTablasDataContext())
+            {
+                return db.RegistroDiario.FirstOrDefault(r => r.idEmpleado == idEmpleado && r.idFecha == idFecha && r.horaEntrada != null);
+            }
         }
 
         public string ObtenerEstadoAsistencia(string idEmpleado, DateTime now)
         {
-            var nombreEstadoAsistencia = (from r in db.RegistroDiario
-                                          join estado in db.EstadoAsistencia
-                                          on r.idEstadoAsistencia equals estado.idEvento
-                                          where r.idEmpleado == idEmpleado
-                                          && r.Fecha.dia.Equals(now.Day) && r.Fecha.mes.Equals(now.Month) && r.Fecha.ano.Equals(now.Year)
-                                          select estado.nombreEvento).FirstOrDefault();
+            using (var db = new DataClassesTablasDataContext())
+            {
+                var nombreEstadoAsistencia = (from r in db.RegistroDiario
+                                              join estado in db.EstadoAsistencia
+                                              on r.idEstadoAsistencia equals estado.idEvento
+                                              where r.idEmpleado == idEmpleado
+                                              && r.Fecha.dia.Equals(now.Day) && r.Fecha.mes.Equals(now.Month) && r.Fecha.ano.Equals(now.Year)
+                                              select estado.nombreEvento).FirstOrDefault();
 
-            if (nombreEstadoAsistencia == null) return "No registrado";
-            return nombreEstadoAsistencia;
+                if (nombreEstadoAsistencia == null) return "No registrado";
+                return nombreEstadoAsistencia;
+            }
+
         }
     }
 }

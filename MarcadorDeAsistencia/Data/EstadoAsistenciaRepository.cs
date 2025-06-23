@@ -4,11 +4,12 @@ namespace MarcadorDeAsistencia.Data
 {
     internal class EstadoAsistenciaRepository
     {
-        DataClassesTablasDataContext db = new DataClassesTablasDataContext();
-
         public EstadoAsistencia obtenerEstado(string estado)
         {
-            return db.EstadoAsistencia.FirstOrDefault(e => e.nombreEvento.Equals(estado));
+            using (var db = new DataClassesTablasDataContext())
+            {
+                return db.EstadoAsistencia.FirstOrDefault(e => e.nombreEvento.Equals(estado));
+            }
         }
     }
 }
