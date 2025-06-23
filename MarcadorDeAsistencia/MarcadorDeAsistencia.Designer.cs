@@ -232,6 +232,7 @@
             this.btnInicioDescanso.Size = new System.Drawing.Size(84, 30);
             this.btnInicioDescanso.TabIndex = 7;
             this.btnInicioDescanso.Text = "INICIO";
+            this.btnInicioDescanso.Click += new System.EventHandler(this.btnInicioDescanso_Click);
             // 
             // btnFinDescanso
             // 
@@ -249,6 +250,7 @@
             this.btnFinDescanso.Size = new System.Drawing.Size(90, 30);
             this.btnFinDescanso.TabIndex = 6;
             this.btnFinDescanso.Text = "FIN";
+            this.btnFinDescanso.Click += new System.EventHandler(this.btnFinDescanso_Click);
             // 
             // lblHora
             // 

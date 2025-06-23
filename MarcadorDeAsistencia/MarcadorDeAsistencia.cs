@@ -39,6 +39,8 @@ namespace MarcadorDeAsistencia
             lblValidacion.Text = string.Empty;
             lblNombre.Text = string.Empty;
             lblTipoyHora.Text = string.Empty;
+
+            gbDescanso.Enabled = false;
         }
 
         private void TimerHora_Tick(object sender, EventArgs e)
@@ -116,11 +118,15 @@ namespace MarcadorDeAsistencia
                             lblTipoyHora.Text = $"{registroDiarioRepository.ObtenerEstadoAsistencia(empleado.idEmpleado, DateTime.Now)} - {FechaUtil.FormatearHora(DateTime.Now)}";
                             cleanTxtCodigo();
 
+                            var turno = turnoRepository.ObtenerTurno(empleado.idTurno);
+                            TimeSpan horaSalidaProgramada = turno.horaFin;
+                            TimeSpan horaActual = DateTime.Now.TimeOfDay;
+                            TimeSpan dosHorasAntesSalida = horaSalidaProgramada - TimeSpan.FromHours(2);
+
                             var fecha = fechaRepository.ObtenerOInsertarFecha(DateTime.Today);
                             if (!registroDiarioRepository.ExisteEntrada(empleado.idEmpleado, fecha.idFecha))
                             {
                                 TimeSpan horaEntradaProgramada = turnoRepository.ObtenerTurno(empleado.idRol).horaInicio;
-                                TimeSpan horaActual = DateTime.Now.TimeOfDay;
                                 int minutosRetraso = (int)(horaActual - horaEntradaProgramada).TotalMinutes;
 
                                 int idEstadoAsistencia;
@@ -147,6 +153,20 @@ namespace MarcadorDeAsistencia
                                 };
 
                                 registroDiarioRepository.registrarRegistroDiario(registro);
+                            }
+                            else
+                            {
+                                if (horaActual >= dosHorasAntesSalida)
+                                {
+                                    registroDiarioRepository.RegistrarSalida(empleado.idEmpleado, fecha.idFecha, horaActual);
+                                    MessageBox.Show("Salida registrada correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    gbDescanso.Enabled = false;
+                                }
+                                else
+                                {
+                                    gbDescanso.Enabled = true;
+                                    MessageBox.Show("Puede registrar su descanso.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
                             }
 
                         }));
@@ -285,6 +305,68 @@ namespace MarcadorDeAsistencia
             empleado = null;
             lblValidacion.Text = string.Empty;
             cleanTxtCodigo();
+        }
+
+        private void btnInicioDescanso_Click(object sender, EventArgs e)
+        {
+            if (empleado == null)
+            {
+                MessageBox.Show("Debe validar primero el empleado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var fecha = fechaRepository.ObtenerOInsertarFecha(DateTime.Today);
+
+            if (!registroDiarioRepository.ExisteEntrada(empleado.idEmpleado, fecha.idFecha))
+            {
+                MessageBox.Show("No existe una entrada registrada para este empleado en la fecha de hoy.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var registro = registroDiarioRepository.ObtenerRegistro(empleado.idEmpleado, fecha.idFecha);
+            if (registro == null || registro.horaSalida != null)
+            {
+                MessageBox.Show("No se puede registrar el inicio de descanso porque ya existe una salida registrada.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            registroDiarioRepository.RegistrarInicioDescanso(empleado.idEmpleado, fecha.idFecha, DateTime.Now.TimeOfDay);
+
+            MessageBox.Show("Inicio de descanso registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DesactivarGroupBoxTipoAsistencia();
+        }
+
+        private void btnFinDescanso_Click(object sender, EventArgs e)
+        {
+            if (empleado == null)
+            {
+                MessageBox.Show("Debe validar primero el empleado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var fecha = fechaRepository.ObtenerOInsertarFecha(DateTime.Today);
+
+            var registro = registroDiarioRepository.ObtenerRegistro(empleado.idEmpleado, fecha.idFecha);
+            if (registro == null || registro.horaEntrada == null)
+            {
+                MessageBox.Show("No existe una entrada registrada para este empleado en la fecha de hoy.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (registro.inicioDescanso == null)
+            {
+                MessageBox.Show("No se ha registrado un inicio de descanso para este empleado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (registro.horaSalida != null)
+            {
+                MessageBox.Show("Ya existe una salida registrada para este empleado en la fecha de hoy.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            registroDiarioRepository.RegistrarFinDescanso(empleado.idEmpleado, fecha.idFecha, DateTime.Now.TimeOfDay);
+
+            MessageBox.Show("Fin de descanso registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DesactivarGroupBoxTipoAsistencia();
         }
     }
 }
