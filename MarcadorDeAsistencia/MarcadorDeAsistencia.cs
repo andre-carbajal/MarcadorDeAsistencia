@@ -4,6 +4,7 @@ using MarcadorDeAsistencia.Data;
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -41,6 +42,22 @@ namespace MarcadorDeAsistencia
             lblTipoyHora.Text = string.Empty;
 
             gbDescanso.Enabled = false;
+            this.Load += MarcadorDeAsistencia_Load;
+        }
+
+        private void MarcadorDeAsistencia_Load(object sender, EventArgs e)
+        {
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(MarcadorDeAsistencia_KeyDown);
+        }
+
+        private void MarcadorDeAsistencia_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnValidar.PerformClick();
+                e.Handled = true;
+            }
         }
 
         private void btnCerrar_Click(object sender, EventArgs e) => Close();
@@ -372,6 +389,34 @@ namespace MarcadorDeAsistencia
             empleado = null;
             lblValidacion.Text = string.Empty;
             cleanTxtCodigo();
+        }
+
+        private void txtCodigo_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Regex ValidarNumero = new Regex("^\\d+$");
+                string texto = txtCodigo.Text;
+                int selStart = txtCodigo.SelectionStart;
+                if (!ValidarNumero.IsMatch(texto) || texto.Length > 8)
+                {
+                    if (texto.Length > 0)
+                    {
+                        txtCodigo.Text = texto.Remove(selStart - 1, 1);
+                        txtCodigo.SelectionStart = selStart - 1;
+                    }
+                    else
+                    {
+                        txtCodigo.Text = "";
+                        txtCodigo.SelectionStart = 0;
+                    }
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex = new Exception("Error al procesar el texto del código.", ex);
+            }
         }
     }
 }

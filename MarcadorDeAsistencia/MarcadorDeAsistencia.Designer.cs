@@ -70,8 +70,9 @@
             this.guna2Panel1.Controls.Add(this.guna2Panel4);
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
+            this.guna2Panel1.Margin = new System.Windows.Forms.Padding(4);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(881, 550);
+            this.guna2Panel1.Size = new System.Drawing.Size(1175, 677);
             this.guna2Panel1.TabIndex = 4;
             // 
             // btnMinimizar
@@ -83,9 +84,10 @@
             this.btnMinimizar.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnMinimizar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnMinimizar.ForeColor = System.Drawing.Color.White;
-            this.btnMinimizar.Location = new System.Drawing.Point(783, 15);
+            this.btnMinimizar.Location = new System.Drawing.Point(1044, 18);
+            this.btnMinimizar.Margin = new System.Windows.Forms.Padding(4);
             this.btnMinimizar.Name = "btnMinimizar";
-            this.btnMinimizar.Size = new System.Drawing.Size(36, 23);
+            this.btnMinimizar.Size = new System.Drawing.Size(48, 28);
             this.btnMinimizar.TabIndex = 7;
             this.btnMinimizar.Click += new System.EventHandler(this.btnMinimizar_Click);
             // 
@@ -99,9 +101,10 @@
             this.btnCerrar.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnCerrar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnCerrar.ForeColor = System.Drawing.Color.White;
-            this.btnCerrar.Location = new System.Drawing.Point(829, 12);
+            this.btnCerrar.Location = new System.Drawing.Point(1105, 15);
+            this.btnCerrar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCerrar.Name = "btnCerrar";
-            this.btnCerrar.Size = new System.Drawing.Size(36, 23);
+            this.btnCerrar.Size = new System.Drawing.Size(48, 28);
             this.btnCerrar.TabIndex = 5;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
@@ -118,18 +121,20 @@
             this.guna2Panel4.Controls.Add(this.lblHora);
             this.guna2Panel4.Controls.Add(this.lblFecha);
             this.guna2Panel4.Controls.Add(this.guna2GroupBox1);
-            this.guna2Panel4.Location = new System.Drawing.Point(17, 44);
+            this.guna2Panel4.Location = new System.Drawing.Point(23, 54);
+            this.guna2Panel4.Margin = new System.Windows.Forms.Padding(4);
             this.guna2Panel4.Name = "guna2Panel4";
-            this.guna2Panel4.Size = new System.Drawing.Size(847, 487);
+            this.guna2Panel4.Size = new System.Drawing.Size(1129, 599);
             this.guna2Panel4.TabIndex = 3;
             // 
             // pbLogo
             // 
             this.pbLogo.Image = ((System.Drawing.Image)(resources.GetObject("pbLogo.Image")));
             this.pbLogo.ImageRotate = 0F;
-            this.pbLogo.Location = new System.Drawing.Point(25, 29);
+            this.pbLogo.Location = new System.Drawing.Point(33, 36);
+            this.pbLogo.Margin = new System.Windows.Forms.Padding(4);
             this.pbLogo.Name = "pbLogo";
-            this.pbLogo.Size = new System.Drawing.Size(453, 424);
+            this.pbLogo.Size = new System.Drawing.Size(604, 522);
             this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbLogo.TabIndex = 15;
             this.pbLogo.TabStop = false;
@@ -145,9 +150,10 @@
             this.btnCancelar.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(185)))), ((int)(((byte)(148)))));
             this.btnCancelar.Font = new System.Drawing.Font("Artifakt Element", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.ForeColor = System.Drawing.Color.White;
-            this.btnCancelar.Location = new System.Drawing.Point(724, 432);
+            this.btnCancelar.Location = new System.Drawing.Point(965, 532);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(102, 30);
+            this.btnCancelar.Size = new System.Drawing.Size(136, 37);
             this.btnCancelar.TabIndex = 9;
             this.btnCancelar.Text = "CANCELAR";
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -156,9 +162,10 @@
             // 
             this.lblValidacion.AutoSize = true;
             this.lblValidacion.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValidacion.Location = new System.Drawing.Point(225, 420);
+            this.lblValidacion.Location = new System.Drawing.Point(300, 517);
+            this.lblValidacion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblValidacion.Name = "lblValidacion";
-            this.lblValidacion.Size = new System.Drawing.Size(51, 19);
+            this.lblValidacion.Size = new System.Drawing.Size(62, 24);
             this.lblValidacion.TabIndex = 14;
             this.lblValidacion.Text = "label1";
             // 
@@ -171,9 +178,10 @@
             this.guna2GroupBox3.CustomBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(185)))), ((int)(((byte)(148)))));
             this.guna2GroupBox3.Font = new System.Drawing.Font("Artifakt Element", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2GroupBox3.ForeColor = System.Drawing.Color.White;
-            this.guna2GroupBox3.Location = new System.Drawing.Point(497, 297);
+            this.guna2GroupBox3.Location = new System.Drawing.Point(663, 366);
+            this.guna2GroupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.guna2GroupBox3.Name = "guna2GroupBox3";
-            this.guna2GroupBox3.Size = new System.Drawing.Size(329, 117);
+            this.guna2GroupBox3.Size = new System.Drawing.Size(439, 144);
             this.guna2GroupBox3.TabIndex = 13;
             this.guna2GroupBox3.Text = "REGISTRO ANTERIOR";
             // 
@@ -182,9 +190,10 @@
             this.lblTipoyHora.AutoSize = true;
             this.lblTipoyHora.BackColor = System.Drawing.Color.Transparent;
             this.lblTipoyHora.ForeColor = System.Drawing.Color.Black;
-            this.lblTipoyHora.Location = new System.Drawing.Point(19, 81);
+            this.lblTipoyHora.Location = new System.Drawing.Point(25, 100);
+            this.lblTipoyHora.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTipoyHora.Name = "lblTipoyHora";
-            this.lblTipoyHora.Size = new System.Drawing.Size(53, 21);
+            this.lblTipoyHora.Size = new System.Drawing.Size(67, 27);
             this.lblTipoyHora.TabIndex = 1;
             this.lblTipoyHora.Text = "label2";
             // 
@@ -193,17 +202,19 @@
             this.lblNombre.AutoSize = true;
             this.lblNombre.BackColor = System.Drawing.Color.Transparent;
             this.lblNombre.ForeColor = System.Drawing.Color.Black;
-            this.lblNombre.Location = new System.Drawing.Point(19, 56);
+            this.lblNombre.Location = new System.Drawing.Point(25, 69);
+            this.lblNombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(52, 21);
+            this.lblNombre.Size = new System.Drawing.Size(66, 27);
             this.lblNombre.TabIndex = 0;
             this.lblNombre.Text = "label1";
             // 
             // pbCamera
             // 
-            this.pbCamera.Location = new System.Drawing.Point(26, 29);
+            this.pbCamera.Location = new System.Drawing.Point(35, 36);
+            this.pbCamera.Margin = new System.Windows.Forms.Padding(4);
             this.pbCamera.Name = "pbCamera";
-            this.pbCamera.Size = new System.Drawing.Size(452, 371);
+            this.pbCamera.Size = new System.Drawing.Size(603, 457);
             this.pbCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbCamera.TabIndex = 10;
             this.pbCamera.TabStop = false;
@@ -220,9 +231,10 @@
             this.gbDescanso.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(236)))), ((int)(((byte)(222)))));
             this.gbDescanso.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.gbDescanso.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.gbDescanso.Location = new System.Drawing.Point(497, 208);
+            this.gbDescanso.Location = new System.Drawing.Point(663, 256);
+            this.gbDescanso.Margin = new System.Windows.Forms.Padding(4);
             this.gbDescanso.Name = "gbDescanso";
-            this.gbDescanso.Size = new System.Drawing.Size(329, 64);
+            this.gbDescanso.Size = new System.Drawing.Size(439, 79);
             this.gbDescanso.TabIndex = 8;
             // 
             // guna2HtmlLabel4
@@ -230,9 +242,10 @@
             this.guna2HtmlLabel4.BackColor = System.Drawing.Color.Transparent;
             this.guna2HtmlLabel4.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2HtmlLabel4.ForeColor = System.Drawing.Color.Black;
-            this.guna2HtmlLabel4.Location = new System.Drawing.Point(26, 21);
+            this.guna2HtmlLabel4.Location = new System.Drawing.Point(35, 26);
+            this.guna2HtmlLabel4.Margin = new System.Windows.Forms.Padding(4);
             this.guna2HtmlLabel4.Name = "guna2HtmlLabel4";
-            this.guna2HtmlLabel4.Size = new System.Drawing.Size(71, 21);
+            this.guna2HtmlLabel4.Size = new System.Drawing.Size(87, 26);
             this.guna2HtmlLabel4.TabIndex = 8;
             this.guna2HtmlLabel4.Text = "DESCANSO";
             // 
@@ -247,9 +260,10 @@
             this.btnInicioDescanso.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(185)))), ((int)(((byte)(148)))));
             this.btnInicioDescanso.Font = new System.Drawing.Font("Artifakt Element", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInicioDescanso.ForeColor = System.Drawing.Color.White;
-            this.btnInicioDescanso.Location = new System.Drawing.Point(115, 17);
+            this.btnInicioDescanso.Location = new System.Drawing.Point(153, 21);
+            this.btnInicioDescanso.Margin = new System.Windows.Forms.Padding(4);
             this.btnInicioDescanso.Name = "btnInicioDescanso";
-            this.btnInicioDescanso.Size = new System.Drawing.Size(84, 30);
+            this.btnInicioDescanso.Size = new System.Drawing.Size(112, 37);
             this.btnInicioDescanso.TabIndex = 7;
             this.btnInicioDescanso.Text = "INICIO";
             // 
@@ -264,9 +278,10 @@
             this.btnFinDescanso.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(185)))), ((int)(((byte)(148)))));
             this.btnFinDescanso.Font = new System.Drawing.Font("Artifakt Element", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFinDescanso.ForeColor = System.Drawing.Color.White;
-            this.btnFinDescanso.Location = new System.Drawing.Point(218, 17);
+            this.btnFinDescanso.Location = new System.Drawing.Point(291, 21);
+            this.btnFinDescanso.Margin = new System.Windows.Forms.Padding(4);
             this.btnFinDescanso.Name = "btnFinDescanso";
-            this.btnFinDescanso.Size = new System.Drawing.Size(90, 30);
+            this.btnFinDescanso.Size = new System.Drawing.Size(120, 37);
             this.btnFinDescanso.TabIndex = 6;
             this.btnFinDescanso.Text = "FIN";
             // 
@@ -274,9 +289,10 @@
             // 
             this.lblHora.BackColor = System.Drawing.Color.Transparent;
             this.lblHora.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHora.Location = new System.Drawing.Point(497, 51);
+            this.lblHora.Location = new System.Drawing.Point(663, 63);
+            this.lblHora.Margin = new System.Windows.Forms.Padding(4);
             this.lblHora.Name = "lblHora";
-            this.lblHora.Size = new System.Drawing.Size(39, 21);
+            this.lblHora.Size = new System.Drawing.Size(48, 26);
             this.lblHora.TabIndex = 7;
             this.lblHora.Text = "Hora";
             // 
@@ -284,9 +300,10 @@
             // 
             this.lblFecha.BackColor = System.Drawing.Color.Transparent;
             this.lblFecha.Font = new System.Drawing.Font("Bahnschrift", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFecha.Location = new System.Drawing.Point(497, 20);
+            this.lblFecha.Location = new System.Drawing.Point(663, 25);
+            this.lblFecha.Margin = new System.Windows.Forms.Padding(4);
             this.lblFecha.Name = "lblFecha";
-            this.lblFecha.Size = new System.Drawing.Size(42, 20);
+            this.lblFecha.Size = new System.Drawing.Size(54, 25);
             this.lblFecha.TabIndex = 6;
             this.lblFecha.Text = "Fecha";
             // 
@@ -302,9 +319,10 @@
             this.guna2GroupBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(236)))), ((int)(((byte)(222)))));
             this.guna2GroupBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2GroupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.guna2GroupBox1.Location = new System.Drawing.Point(497, 89);
+            this.guna2GroupBox1.Location = new System.Drawing.Point(663, 110);
+            this.guna2GroupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.guna2GroupBox1.Name = "guna2GroupBox1";
-            this.guna2GroupBox1.Size = new System.Drawing.Size(329, 101);
+            this.guna2GroupBox1.Size = new System.Drawing.Size(439, 124);
             this.guna2GroupBox1.TabIndex = 4;
             // 
             // btnValidar
@@ -318,21 +336,24 @@
             this.btnValidar.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(185)))), ((int)(((byte)(148)))));
             this.btnValidar.Font = new System.Drawing.Font("Artifakt Element", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnValidar.ForeColor = System.Drawing.Color.White;
-            this.btnValidar.Location = new System.Drawing.Point(215, 58);
+            this.btnValidar.Location = new System.Drawing.Point(287, 71);
+            this.btnValidar.Margin = new System.Windows.Forms.Padding(4);
             this.btnValidar.Name = "btnValidar";
-            this.btnValidar.Size = new System.Drawing.Size(90, 30);
+            this.btnValidar.Size = new System.Drawing.Size(120, 37);
             this.btnValidar.TabIndex = 9;
             this.btnValidar.Text = "VALIDAR";
             this.btnValidar.Click += new System.EventHandler(this.btnValidar_Click);
+            this.btnValidar.Enter += new System.EventHandler(this.btnValidar_Click);
             // 
             // guna2HtmlLabel1
             // 
             this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
             this.guna2HtmlLabel1.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2HtmlLabel1.ForeColor = System.Drawing.Color.Black;
-            this.guna2HtmlLabel1.Location = new System.Drawing.Point(23, 22);
+            this.guna2HtmlLabel1.Location = new System.Drawing.Point(31, 27);
+            this.guna2HtmlLabel1.Margin = new System.Windows.Forms.Padding(4);
             this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            this.guna2HtmlLabel1.Size = new System.Drawing.Size(54, 21);
+            this.guna2HtmlLabel1.Size = new System.Drawing.Size(66, 26);
             this.guna2HtmlLabel1.TabIndex = 7;
             this.guna2HtmlLabel1.Text = "CÓDIGO: ";
             // 
@@ -350,21 +371,23 @@
             this.txtCodigo.Font = new System.Drawing.Font("Bahnschrift", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCodigo.ForeColor = System.Drawing.Color.Black;
             this.txtCodigo.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtCodigo.Location = new System.Drawing.Point(87, 18);
-            this.txtCodigo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtCodigo.Location = new System.Drawing.Point(116, 22);
+            this.txtCodigo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.PlaceholderText = "";
             this.txtCodigo.SelectedText = "";
-            this.txtCodigo.Size = new System.Drawing.Size(216, 28);
+            this.txtCodigo.Size = new System.Drawing.Size(288, 34);
             this.txtCodigo.TabIndex = 3;
+            this.txtCodigo.TextChanged += new System.EventHandler(this.txtCodigo_TextChanged);
             // 
             // MarcadorDeAsistencia
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(881, 550);
+            this.ClientSize = new System.Drawing.Size(1175, 677);
             this.Controls.Add(this.guna2Panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MarcadorDeAsistencia";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Control de Asistencia";
