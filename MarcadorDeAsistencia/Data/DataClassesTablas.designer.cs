@@ -39,12 +39,12 @@ namespace MarcadorDeAsistencia.Data
     partial void InsertEmpleado(Empleado instance);
     partial void UpdateEmpleado(Empleado instance);
     partial void DeleteEmpleado(Empleado instance);
-    partial void InsertEstadoAsistencia(EstadoAsistencia instance);
-    partial void UpdateEstadoAsistencia(EstadoAsistencia instance);
-    partial void DeleteEstadoAsistencia(EstadoAsistencia instance);
     partial void InsertTurno(Turno instance);
     partial void UpdateTurno(Turno instance);
     partial void DeleteTurno(Turno instance);
+    partial void InsertEstadoAsistencia(EstadoAsistencia instance);
+    partial void UpdateEstadoAsistencia(EstadoAsistencia instance);
+    partial void DeleteEstadoAsistencia(EstadoAsistencia instance);
     #endregion
 		
 		public DataClassesTablasDataContext() : 
@@ -101,19 +101,19 @@ namespace MarcadorDeAsistencia.Data
 			}
 		}
 		
-		public System.Data.Linq.Table<EstadoAsistencia> EstadoAsistencia
-		{
-			get
-			{
-				return this.GetTable<EstadoAsistencia>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Turno> Turno
 		{
 			get
 			{
 				return this.GetTable<Turno>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EstadoAsistencia> EstadoAsistencia
+		{
+			get
+			{
+				return this.GetTable<EstadoAsistencia>();
 			}
 		}
 	}
@@ -298,13 +298,13 @@ namespace MarcadorDeAsistencia.Data
 		
 		private System.Nullable<System.TimeSpan> _horaSalida;
 		
-		private System.Nullable<int> _idEstadoAsistencia;
+		private int _estadoAsistencia;
 		
 		private EntityRef<Fecha> _Fecha;
 		
 		private EntityRef<Empleado> _Empleado;
 		
-		private EntityRef<EstadoAsistencia> _EstadoAsistencia;
+		private EntityRef<EstadoAsistencia> _EstadoAsistencia1;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -322,15 +322,15 @@ namespace MarcadorDeAsistencia.Data
     partial void OnfinDescansoChanged();
     partial void OnhoraSalidaChanging(System.Nullable<System.TimeSpan> value);
     partial void OnhoraSalidaChanged();
-    partial void OnidEstadoAsistenciaChanging(System.Nullable<int> value);
-    partial void OnidEstadoAsistenciaChanged();
+    partial void OnestadoAsistenciaChanging(int value);
+    partial void OnestadoAsistenciaChanged();
     #endregion
 		
 		public RegistroDiario()
 		{
 			this._Fecha = default(EntityRef<Fecha>);
 			this._Empleado = default(EntityRef<Empleado>);
-			this._EstadoAsistencia = default(EntityRef<EstadoAsistencia>);
+			this._EstadoAsistencia1 = default(EntityRef<EstadoAsistencia>);
 			OnCreated();
 		}
 		
@@ -462,26 +462,26 @@ namespace MarcadorDeAsistencia.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idEstadoAsistencia", DbType="Int")]
-		public System.Nullable<int> idEstadoAsistencia
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_estadoAsistencia", DbType="Int NOT NULL")]
+		public int estadoAsistencia
 		{
 			get
 			{
-				return this._idEstadoAsistencia;
+				return this._estadoAsistencia;
 			}
 			set
 			{
-				if ((this._idEstadoAsistencia != value))
+				if ((this._estadoAsistencia != value))
 				{
-					if (this._EstadoAsistencia.HasLoadedOrAssignedValue)
+					if (this._EstadoAsistencia1.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnidEstadoAsistenciaChanging(value);
+					this.OnestadoAsistenciaChanging(value);
 					this.SendPropertyChanging();
-					this._idEstadoAsistencia = value;
-					this.SendPropertyChanged("idEstadoAsistencia");
-					this.OnidEstadoAsistenciaChanged();
+					this._estadoAsistencia = value;
+					this.SendPropertyChanged("estadoAsistencia");
+					this.OnestadoAsistenciaChanged();
 				}
 			}
 		}
@@ -554,36 +554,36 @@ namespace MarcadorDeAsistencia.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadoAsistencia_RegistroDiario", Storage="_EstadoAsistencia", ThisKey="idEstadoAsistencia", OtherKey="idEvento", IsForeignKey=true)]
-		public EstadoAsistencia EstadoAsistencia
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadoAsistencia_RegistroDiario", Storage="_EstadoAsistencia1", ThisKey="estadoAsistencia", OtherKey="idEvento", IsForeignKey=true)]
+		public EstadoAsistencia EstadoAsistencia1
 		{
 			get
 			{
-				return this._EstadoAsistencia.Entity;
+				return this._EstadoAsistencia1.Entity;
 			}
 			set
 			{
-				EstadoAsistencia previousValue = this._EstadoAsistencia.Entity;
+				EstadoAsistencia previousValue = this._EstadoAsistencia1.Entity;
 				if (((previousValue != value) 
-							|| (this._EstadoAsistencia.HasLoadedOrAssignedValue == false)))
+							|| (this._EstadoAsistencia1.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._EstadoAsistencia.Entity = null;
+						this._EstadoAsistencia1.Entity = null;
 						previousValue.RegistroDiario.Remove(this);
 					}
-					this._EstadoAsistencia.Entity = value;
+					this._EstadoAsistencia1.Entity = value;
 					if ((value != null))
 					{
 						value.RegistroDiario.Add(this);
-						this._idEstadoAsistencia = value.idEvento;
+						this._estadoAsistencia = value.idEvento;
 					}
 					else
 					{
-						this._idEstadoAsistencia = default(Nullable<int>);
+						this._estadoAsistencia = default(int);
 					}
-					this.SendPropertyChanged("EstadoAsistencia");
+					this.SendPropertyChanged("EstadoAsistencia1");
 				}
 			}
 		}
@@ -836,120 +836,6 @@ namespace MarcadorDeAsistencia.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EstadoAsistencia")]
-	public partial class EstadoAsistencia : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _idEvento;
-		
-		private string _nombreEvento;
-		
-		private EntitySet<RegistroDiario> _RegistroDiario;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidEventoChanging(int value);
-    partial void OnidEventoChanged();
-    partial void OnnombreEventoChanging(string value);
-    partial void OnnombreEventoChanged();
-    #endregion
-		
-		public EstadoAsistencia()
-		{
-			this._RegistroDiario = new EntitySet<RegistroDiario>(new Action<RegistroDiario>(this.attach_RegistroDiario), new Action<RegistroDiario>(this.detach_RegistroDiario));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idEvento", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int idEvento
-		{
-			get
-			{
-				return this._idEvento;
-			}
-			set
-			{
-				if ((this._idEvento != value))
-				{
-					this.OnidEventoChanging(value);
-					this.SendPropertyChanging();
-					this._idEvento = value;
-					this.SendPropertyChanged("idEvento");
-					this.OnidEventoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombreEvento", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
-		public string nombreEvento
-		{
-			get
-			{
-				return this._nombreEvento;
-			}
-			set
-			{
-				if ((this._nombreEvento != value))
-				{
-					this.OnnombreEventoChanging(value);
-					this.SendPropertyChanging();
-					this._nombreEvento = value;
-					this.SendPropertyChanged("nombreEvento");
-					this.OnnombreEventoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadoAsistencia_RegistroDiario", Storage="_RegistroDiario", ThisKey="idEvento", OtherKey="idEstadoAsistencia")]
-		public EntitySet<RegistroDiario> RegistroDiario
-		{
-			get
-			{
-				return this._RegistroDiario;
-			}
-			set
-			{
-				this._RegistroDiario.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_RegistroDiario(RegistroDiario entity)
-		{
-			this.SendPropertyChanging();
-			entity.EstadoAsistencia = this;
-		}
-		
-		private void detach_RegistroDiario(RegistroDiario entity)
-		{
-			this.SendPropertyChanging();
-			entity.EstadoAsistencia = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Turno")]
 	public partial class Turno : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1109,6 +995,120 @@ namespace MarcadorDeAsistencia.Data
 		{
 			this.SendPropertyChanging();
 			entity.Turno = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EstadoAsistencia")]
+	public partial class EstadoAsistencia : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idEvento;
+		
+		private string _nombreEvento;
+		
+		private EntitySet<RegistroDiario> _RegistroDiario;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidEventoChanging(int value);
+    partial void OnidEventoChanged();
+    partial void OnnombreEventoChanging(string value);
+    partial void OnnombreEventoChanged();
+    #endregion
+		
+		public EstadoAsistencia()
+		{
+			this._RegistroDiario = new EntitySet<RegistroDiario>(new Action<RegistroDiario>(this.attach_RegistroDiario), new Action<RegistroDiario>(this.detach_RegistroDiario));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idEvento", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int idEvento
+		{
+			get
+			{
+				return this._idEvento;
+			}
+			set
+			{
+				if ((this._idEvento != value))
+				{
+					this.OnidEventoChanging(value);
+					this.SendPropertyChanging();
+					this._idEvento = value;
+					this.SendPropertyChanged("idEvento");
+					this.OnidEventoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombreEvento", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string nombreEvento
+		{
+			get
+			{
+				return this._nombreEvento;
+			}
+			set
+			{
+				if ((this._nombreEvento != value))
+				{
+					this.OnnombreEventoChanging(value);
+					this.SendPropertyChanging();
+					this._nombreEvento = value;
+					this.SendPropertyChanged("nombreEvento");
+					this.OnnombreEventoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadoAsistencia_RegistroDiario", Storage="_RegistroDiario", ThisKey="idEvento", OtherKey="estadoAsistencia")]
+		public EntitySet<RegistroDiario> RegistroDiario
+		{
+			get
+			{
+				return this._RegistroDiario;
+			}
+			set
+			{
+				this._RegistroDiario.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_RegistroDiario(RegistroDiario entity)
+		{
+			this.SendPropertyChanging();
+			entity.EstadoAsistencia1 = this;
+		}
+		
+		private void detach_RegistroDiario(RegistroDiario entity)
+		{
+			this.SendPropertyChanging();
+			entity.EstadoAsistencia1 = null;
 		}
 	}
 }

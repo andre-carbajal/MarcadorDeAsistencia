@@ -120,8 +120,6 @@ namespace MarcadorDeAsistencia
                         {
                             StopCamera();
                             empleado = empleadoRepository.ObtenerEmpleado(txtCodigo.Text);
-                            lblNombre.Text = $"{empleado.nombreEmpleado} {empleado.apellidoEmpleado}";
-                            lblTipoyHora.Text = $"{registroDiarioRepository.ObtenerEstadoAsistencia(empleado.idEmpleado, DateTime.Now)} - {FechaUtil.FormatearHora(DateTime.Now)}";
                             cleanTxtCodigo();
 
                             var turno = turnoRepository.ObtenerTurno(empleado.idTurno);
@@ -155,10 +153,12 @@ namespace MarcadorDeAsistencia
                                     idEmpleado = empleado.idEmpleado,
                                     idFecha = fecha.idFecha,
                                     horaEntrada = horaActual,
-                                    idEstadoAsistencia = idEstadoAsistencia
+                                    estadoAsistencia = idEstadoAsistencia
                                 };
 
                                 registroDiarioRepository.registrarRegistroDiario(registro);
+                                lblNombre.Text = $"{empleado.nombreEmpleado} {empleado.apellidoEmpleado}";
+                                lblTipoyHora.Text = $"{registroDiarioRepository.ObtenerEstadoAsistencia(empleado.idEmpleado, DateTime.Now)} - {FechaUtil.FormatearHora(DateTime.Now)}";
                             }
                             else
                             {

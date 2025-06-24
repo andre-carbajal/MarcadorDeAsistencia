@@ -86,7 +86,7 @@ namespace MarcadorDeAsistencia.Data
             {
                 var nombreEstadoAsistencia = (from r in db.RegistroDiario
                                               join estado in db.EstadoAsistencia
-                                              on r.idEstadoAsistencia equals estado.idEvento
+                                              on r.estadoAsistencia equals estado.idEvento
                                               where r.idEmpleado == idEmpleado
                                               && r.Fecha.dia.Equals(now.Day) && r.Fecha.mes.Equals(now.Month) && r.Fecha.ano.Equals(now.Year)
                                               select estado.nombreEvento).FirstOrDefault();

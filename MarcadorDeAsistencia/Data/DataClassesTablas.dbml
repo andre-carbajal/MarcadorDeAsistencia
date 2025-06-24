@@ -17,10 +17,10 @@
       <Column Name="inicioDescanso" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
       <Column Name="finDescanso" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
       <Column Name="horaSalida" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
-      <Column Name="idEstadoAsistencia" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="estadoAsistencia" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Fecha_RegistroDiario" Member="Fecha" ThisKey="idFecha" OtherKey="idFecha" Type="Fecha" IsForeignKey="true" />
       <Association Name="Empleado_RegistroDiario" Member="Empleado" ThisKey="idEmpleado" OtherKey="idEmpleado" Type="Empleado" IsForeignKey="true" />
-      <Association Name="EstadoAsistencia_RegistroDiario" Member="EstadoAsistencia" ThisKey="idEstadoAsistencia" OtherKey="idEvento" Type="EstadoAsistencia" IsForeignKey="true" />
+      <Association Name="EstadoAsistencia_RegistroDiario" Member="EstadoAsistencia1" ThisKey="estadoAsistencia" OtherKey="idEvento" Type="EstadoAsistencia" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Empleado" Member="Empleado">
@@ -34,13 +34,6 @@
       <Association Name="Turno_Empleado" Member="Turno" ThisKey="idTurno" OtherKey="idTurno" Type="Turno" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.EstadoAsistencia" Member="EstadoAsistencia">
-    <Type Name="EstadoAsistencia">
-      <Column Name="idEvento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="nombreEvento" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Association Name="EstadoAsistencia_RegistroDiario" Member="RegistroDiario" ThisKey="idEvento" OtherKey="idEstadoAsistencia" Type="RegistroDiario" />
-    </Type>
-  </Table>
   <Table Name="dbo.Turno" Member="Turno">
     <Type Name="Turno">
       <Column Name="idTurno" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -48,6 +41,13 @@
       <Column Name="horaInicio" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
       <Column Name="horaFin" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
       <Association Name="Turno_Empleado" Member="Empleado" ThisKey="idTurno" OtherKey="idTurno" Type="Empleado" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EstadoAsistencia" Member="EstadoAsistencia">
+    <Type Name="EstadoAsistencia">
+      <Column Name="idEvento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombreEvento" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="EstadoAsistencia_RegistroDiario" Member="RegistroDiario" ThisKey="idEvento" OtherKey="estadoAsistencia" Type="RegistroDiario" />
     </Type>
   </Table>
 </Database>

@@ -8,7 +8,7 @@ namespace MarcadorDeAsistencia.Data
         {
             using (var db = new DataClassesTablasDataContext())
             {
-                return db.Empleado.FirstOrDefault(e => e.idEmpleado.Equals(idEmpleado));
+                return db.Empleado.Single(e => e.idEmpleado.Equals(idEmpleado));
             }
         }
     }
