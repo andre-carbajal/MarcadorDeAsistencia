@@ -267,9 +267,8 @@ namespace MarcadorDeAsistencia
             DesactivarGroupBoxTipoAsistencia();
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
+        private void CancelarRegistro()
         {
-            StopCamera();
             lblValidacion.Text = string.Empty;
             lblNombre.Text = string.Empty;
             lblTipoyHora.Text = string.Empty;
@@ -277,6 +276,14 @@ namespace MarcadorDeAsistencia
             pbLogo.Visible = true;
             pbCamera.Visible = false;
             gbDescanso.Enabled = false;
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("¿Desea cancelar el último registro?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                CancelarRegistro();
+            }
         }
 
         private void cleanTxtCodigo() => txtCodigo.Clear();
@@ -394,6 +401,7 @@ namespace MarcadorDeAsistencia
             empleado = null;
             lblValidacion.Text = string.Empty;
             cleanTxtCodigo();
+            gbDescanso.Enabled = false;
         }
 
         private void txtCodigo_TextChanged(object sender, EventArgs e)
