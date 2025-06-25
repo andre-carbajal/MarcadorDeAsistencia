@@ -31,24 +31,24 @@ namespace MarcadorDeAsistencia
             InitializeComponent();
 
             timerHora.Interval = 1000;
-            timerHora.Tick += (s, e) => lblHora.Text=FechaUtil.FormatearHora(DateTime.Now);
+            timerHora.Tick += (s, e) => lblHora.Text = FechaUtil.FormatearHora(DateTime.Now);
             timerHora.Start();
 
             lblFecha.Text = FechaUtil.FormatearFechaLarga(DateTime.Now);
-            lblHora.Text = FechaUtil.FormatearHora(DateTime.Now);
 
             lblValidacion.Text = string.Empty;
             lblNombre.Text = string.Empty;
             lblTipoyHora.Text = string.Empty;
 
             gbDescanso.Enabled = false;
-            this.Load += MarcadorDeAsistencia_Load;
+            Load += MarcadorDeAsistencia_Load;
+            this.FormClosing += MarcadorDeAsistencia_FormClosing;
         }
 
         private void MarcadorDeAsistencia_Load(object sender, EventArgs e)
         {
-            this.KeyPreview = true;
-            this.KeyDown += new KeyEventHandler(MarcadorDeAsistencia_KeyDown);
+            KeyPreview = true;
+            KeyDown += new KeyEventHandler(MarcadorDeAsistencia_KeyDown);
         }
 
         private void MarcadorDeAsistencia_KeyDown(object sender, KeyEventArgs e)
@@ -103,9 +103,10 @@ namespace MarcadorDeAsistencia
                     {
                         Invoke(new Action(() =>
                         {
-                            lblValidacion.Text = "No se pudo capturar la imagen de la cámara.";
+                            MessageBox.Show("No se pudo capturar la imagen de la cámara. Asegúrese de que la cámara esté funcionando correctamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             cleanTxtCodigo();
                             StopCamera();
+                            pbLogo.Visible = true;
                         }));
                         return;
                     }
@@ -128,6 +129,7 @@ namespace MarcadorDeAsistencia
                             TimeSpan dosHorasAntesSalida = horaSalidaProgramada - TimeSpan.FromHours(2);
 
                             var fecha = fechaRepository.ObtenerOInsertarFecha(DateTime.Today);
+
                             if (!registroDiarioRepository.ExisteEntrada(empleado.idEmpleado, fecha.idFecha))
                             {
                                 TimeSpan horaEntradaProgramada = turnoRepository.ObtenerTurno(empleado.idRol).horaInicio;
@@ -157,8 +159,6 @@ namespace MarcadorDeAsistencia
                                 };
 
                                 registroDiarioRepository.registrarRegistroDiario(registro);
-                                lblNombre.Text = $"{empleado.nombreEmpleado} {empleado.apellidoEmpleado}";
-                                lblTipoyHora.Text = $"{registroDiarioRepository.ObtenerEstadoAsistencia(empleado.idEmpleado, DateTime.Now)} - {FechaUtil.FormatearHora(DateTime.Now)}";
                             }
                             else
                             {
@@ -181,14 +181,14 @@ namespace MarcadorDeAsistencia
                                     MessageBox.Show("Puede registrar su descanso.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                             }
-
+                            lblNombre.Text = $"{empleado.nombreEmpleado} {empleado.apellidoEmpleado}";
+                            lblTipoyHora.Text = $"{registroDiarioRepository.ObtenerEstadoAsistencia(empleado.idEmpleado, DateTime.Now)} - {FechaUtil.FormatearHora(DateTime.Now)}";
                         }));
                     }
                     else
                     {
                         Invoke(new Action(() =>
                         {
-                            lblValidacion.Text = "Código inválido. Por favor, intente nuevamente.";
                             cleanTxtCodigo();
                             StopCamera();
                         }));
@@ -304,11 +304,15 @@ namespace MarcadorDeAsistencia
         private void StopCameraInternal()
         {
             pbCamera.Visible = true;
-            if (videoSource != null && videoSource.IsRunning)
+            if (videoSource != null)
             {
-                videoSource.SignalToStop();
-                videoSource.WaitForStop();
-                videoSource.NewFrame -= VideoSource_NewFrame;
+                if (videoSource.IsRunning)
+                {
+                    videoSource.SignalToStop();
+                    videoSource.WaitForStop();
+                    videoSource.NewFrame -= VideoSource_NewFrame;
+                }
+                videoSource = null;
             }
             pbCamera.Image?.Dispose();
             pbCamera.Image = null;
@@ -341,6 +345,7 @@ namespace MarcadorDeAsistencia
                 MessageBox.Show($"Error al inicializar la cámara: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 StopCamera();
+                pbLogo.Visible = true;
             }
         }
 
@@ -417,6 +422,11 @@ namespace MarcadorDeAsistencia
             {
                 ex = new Exception("Error al procesar el texto del código.", ex);
             }
+        }
+
+        private void MarcadorDeAsistencia_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            StopCamera();
         }
     }
 }

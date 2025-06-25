@@ -11,12 +11,12 @@ namespace MarcadorDeAsistencia.Data
             {
                 int dia = fecha.Day;
                 int mes = fecha.Month;
-                int año = fecha.Year;
+                int anio = fecha.Year;
 
-                var fechaDb = db.Fecha.FirstOrDefault(f => f.dia.Equals(dia) && f.mes.Equals(mes) && f.ano.Equals(año));
+                var fechaDb = db.Fecha.FirstOrDefault(f => f.dia.Equals(dia) && f.mes.Equals(mes) && f.ano.Equals(anio));
                 if (fechaDb == null)
                 {
-                    fechaDb = new Fecha { dia = dia.ToString(), mes = mes.ToString(), ano = año.ToString() };
+                    fechaDb = new Fecha { dia = dia.ToString(), mes = mes.ToString(), ano = anio.ToString() };
                     db.Fecha.InsertOnSubmit(fechaDb);
                     db.SubmitChanges();
                 }
