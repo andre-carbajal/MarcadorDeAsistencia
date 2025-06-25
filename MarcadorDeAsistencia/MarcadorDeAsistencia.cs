@@ -2,6 +2,7 @@
 using MarcadorDeAsistencia.Clases;
 using MarcadorDeAsistencia.Data;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -23,12 +24,18 @@ namespace MarcadorDeAsistencia
         private VideoCaptureDevice videoSource;
         private Empleado empleado;
 
+        List<EstadoAsistencia> estadosAsistencia;
+        List<Turno> turnos;
+
         private const int toleranciaAsistencia = 15;
         private const int tiempoFalta = 30;
 
         public MarcadorDeAsistencia()
         {
             InitializeComponent();
+
+            estadosAsistencia = estadoAsistenciaRepository.ObtenerEstadosAsistencia();
+            turnos = turnoRepository.ObtenerTurnos();
 
             timerHora.Interval = 1000;
             timerHora.Tick += (s, e) => lblHora.Text = FechaUtil.FormatearHora(DateTime.Now);
@@ -123,7 +130,7 @@ namespace MarcadorDeAsistencia
                             empleado = empleadoRepository.ObtenerEmpleado(txtCodigo.Text);
                             cleanTxtCodigo();
 
-                            var turno = turnoRepository.ObtenerTurno(empleado.idTurno);
+                            var turno = turnos.FirstOrDefault(t => t.idTurno == empleado.idTurno);
                             TimeSpan horaSalidaProgramada = turno.horaFin;
                             TimeSpan horaActual = DateTime.Now.TimeOfDay;
                             TimeSpan dosHorasAntesSalida = horaSalidaProgramada - TimeSpan.FromHours(2);
@@ -132,22 +139,22 @@ namespace MarcadorDeAsistencia
 
                             if (!registroDiarioRepository.ExisteEntrada(empleado.idEmpleado, fecha.idFecha))
                             {
-                                TimeSpan horaEntradaProgramada = turnoRepository.ObtenerTurno(empleado.idRol).horaInicio;
+                                TimeSpan horaEntradaProgramada = turnos.FirstOrDefault(t => t.idTurno == empleado.idTurno).horaInicio;
                                 int minutosRetraso = (int)(horaActual - horaEntradaProgramada).TotalMinutes;
 
                                 int idEstadoAsistencia;
 
                                 if (minutosRetraso <= toleranciaAsistencia)
                                 {
-                                    idEstadoAsistencia = estadoAsistenciaRepository.obtenerEstado("Asistencia").idEvento;
+                                    idEstadoAsistencia = estadosAsistencia.FirstOrDefault(ea => ea.nombreEvento == "Asistencia").idEvento;
                                 }
                                 else if (minutosRetraso >= tiempoFalta)
                                 {
-                                    idEstadoAsistencia = estadoAsistenciaRepository.obtenerEstado("Falta").idEvento;
+                                    idEstadoAsistencia = estadosAsistencia.FirstOrDefault(ea => ea.nombreEvento == "Falta").idEvento;
                                 }
                                 else
                                 {
-                                    idEstadoAsistencia = estadoAsistenciaRepository.obtenerEstado("Tardanza").idEvento;
+                                    idEstadoAsistencia = estadosAsistencia.FirstOrDefault(ea => ea.nombreEvento == "Tardanza").idEvento;
                                 }
 
                                 var registro = new RegistroDiario
@@ -270,8 +277,6 @@ namespace MarcadorDeAsistencia
         private void CancelarRegistro()
         {
             lblValidacion.Text = string.Empty;
-            lblNombre.Text = string.Empty;
-            lblTipoyHora.Text = string.Empty;
             cleanTxtCodigo();
             pbLogo.Visible = true;
             pbCamera.Visible = false;

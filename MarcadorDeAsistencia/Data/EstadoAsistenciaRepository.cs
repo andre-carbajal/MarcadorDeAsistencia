@@ -1,14 +1,15 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace MarcadorDeAsistencia.Data
 {
     internal class EstadoAsistenciaRepository
     {
-        public EstadoAsistencia obtenerEstado(string estado)
+        public List<EstadoAsistencia> ObtenerEstadosAsistencia()
         {
             using (var db = new DataClassesTablasDataContext())
             {
-                return db.EstadoAsistencia.FirstOrDefault(e => e.nombreEvento.Equals(estado));
+                return db.EstadoAsistencia.ToList();
             }
         }
     }
