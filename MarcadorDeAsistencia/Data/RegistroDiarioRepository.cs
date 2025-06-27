@@ -33,15 +33,9 @@ namespace MarcadorDeAsistencia.Data
             {
                 var registro = db.RegistroDiario.FirstOrDefault(r =>
                     r.idEmpleado == idEmpleado &&
-                    r.idFecha == idFecha &&
-                    r.horaEntrada != null &&
-                    r.horaSalida == null);
-
-                if (registro != null)
-                {
-                    registro.horaEntrada = horaInicioDescanso;
-                    db.SubmitChanges();
-                }
+                    r.idFecha == idFecha);
+                registro.inicioDescanso = horaInicioDescanso;
+                db.SubmitChanges();
             }
         }
 
@@ -51,16 +45,10 @@ namespace MarcadorDeAsistencia.Data
             {
                 var registro = db.RegistroDiario.FirstOrDefault(r =>
                     r.idEmpleado == idEmpleado &&
-                    r.idFecha == idFecha &&
-                    r.horaEntrada != null &&
-                    r.inicioDescanso != null &&
-                    r.horaSalida == null);
+                    r.idFecha == idFecha);
 
-                if (registro != null)
-                {
-                    registro.finDescanso = horaFinDescanso;
-                    db.SubmitChanges();
-                }
+                registro.finDescanso = horaFinDescanso;
+                db.SubmitChanges();
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarcadorDeAsistencia.Data;
+using System;
 using System.Globalization;
 
 namespace MarcadorDeAsistencia.Clases
@@ -15,6 +16,11 @@ namespace MarcadorDeAsistencia.Clases
         public static string FormatearHora(DateTime hora)
         {
             return hora.ToString("HH:mm:ss");
+        }
+
+        internal static string FormatearHora(TimeSpan? hora)
+        {
+            return hora.HasValue ? hora.Value.ToString(@"hh\:mm\:ss") : string.Empty;
         }
     }
 }

@@ -47,6 +47,7 @@ namespace MarcadorDeAsistencia
             lblNombre.Text = string.Empty;
             lblTipoyHora.Text = string.Empty;
 
+            btnCancelar.Enabled = false;
             gbDescanso.Enabled = false;
             Load += MarcadorDeAsistencia_Load;
             this.FormClosing += MarcadorDeAsistencia_FormClosing;
@@ -128,7 +129,8 @@ namespace MarcadorDeAsistencia
                         {
                             StopCamera();
                             empleado = empleadoRepository.ObtenerEmpleado(txtCodigo.Text);
-                            cleanTxtCodigo();
+
+                            btnCancelar.Enabled = true;
 
                             var turno = turnos.FirstOrDefault(t => t.idTurno == empleado.idTurno);
                             TimeSpan horaSalidaProgramada = turno.horaFin;
@@ -165,7 +167,8 @@ namespace MarcadorDeAsistencia
                                     estadoAsistencia = idEstadoAsistencia
                                 };
 
-                                registroDiarioRepository.registrarRegistroDiario(registro);
+                                cleanTxtCodigo();
+                                registroDiarioRepository.registrarRegistroDiario(registro);   
                             }
                             else
                             {
@@ -188,8 +191,9 @@ namespace MarcadorDeAsistencia
                                     MessageBox.Show("Puede registrar su descanso.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                             }
+                            var registroGuardado = registroDiarioRepository.ObtenerRegistro(empleado.idEmpleado, fecha.idFecha);
                             lblNombre.Text = $"{empleado.nombreEmpleado} {empleado.apellidoEmpleado}";
-                            lblTipoyHora.Text = $"{registroDiarioRepository.ObtenerEstadoAsistencia(empleado.idEmpleado, DateTime.Now)} - {FechaUtil.FormatearHora(DateTime.Now)}";
+                            lblTipoyHora.Text = $"{registroDiarioRepository.ObtenerEstadoAsistencia(empleado.idEmpleado, DateTime.Now)} - {FechaUtil.FormatearHora(registroGuardado.horaEntrada)}";
                         }));
                     }
                     else
@@ -210,10 +214,13 @@ namespace MarcadorDeAsistencia
                     StopCamera();
                 }
             });
+            btnCancelar.Enabled = false;
         }
 
         private void btnInicioDescanso_Click(object sender, EventArgs e)
         {
+            empleado = empleadoRepository.ObtenerEmpleado(txtCodigo.Text);
+
             if (empleado == null)
             {
                 MessageBox.Show("Debe validar primero el empleado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -239,10 +246,13 @@ namespace MarcadorDeAsistencia
 
             MessageBox.Show("Inicio de descanso registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             DesactivarGroupBoxTipoAsistencia();
+            btnCancelar.Enabled = false;
         }
 
         private void btnFinDescanso_Click(object sender, EventArgs e)
         {
+            empleado = empleadoRepository.ObtenerEmpleado(txtCodigo.Text);
+
             if (empleado == null)
             {
                 MessageBox.Show("Debe validar primero el empleado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -272,6 +282,7 @@ namespace MarcadorDeAsistencia
 
             MessageBox.Show("Fin de descanso registrado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             DesactivarGroupBoxTipoAsistencia();
+            btnCancelar.Enabled = false;
         }
 
         private void CancelarRegistro()
